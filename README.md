@@ -3,6 +3,10 @@ Map service switcher for Chrome/Firefox extension
 
 Greatly contributed by jazzzz. Thanks!
 
+## Motivation for clone
++ Too many outdated maps
++ Opens in the same tab
+
 ## Install
 ### from Browser plugin
 + [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmaps/cfkddjlocfecchnemnnmmpdjcohgmkij)
