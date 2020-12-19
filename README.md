@@ -18,6 +18,7 @@ This extention uses Node.js
 1. Build the extension: npm run build
 1. The extension is built in the `dist` directory
 1. Add to your Chrome/Firefox 
+	+ Chrome: chrome://extensions/ -> Load unpacked 
 
 ## How to use
 1. Open Google map, for example
