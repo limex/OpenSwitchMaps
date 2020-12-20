@@ -1,21 +1,21 @@
 {
-  "name": "OpenSwitchMaps",
-  "version": "1.3.2",
-  "description": "Switch map services, and some useful links for OpenStreetMap contributors",
+  "name": "OpenSwitchMaps_limex",
+  "version": "1.3.3",
+  "description": "Switch map services, and some useful links for OpenStreetMap contributors. Adapted by limex. Original by tankaru",
   "scripts": {
     "dev": "parcel watch src/manifest.json",
     "build": "parcel build src/manifest.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tankaru/OpenSwitchMaps.git"
+    "url": "git+https://github.com/limex/OpenSwitchMaps.git"
   },
-  "author": "tankaru",
+  "author": "limex",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tankaru/OpenSwitchMaps/issues"
+    "url": "https://github.com/limex/OpenSwitchMaps/issues"
   },
-  "homepage": "https://github.com/tankaru/OpenSwitchMaps#readme",
+  "homepage": "https://github.com/limex/OpenSwitchMaps#readme",
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.1.2",
     "parcel-bundler": "^1.12.4",

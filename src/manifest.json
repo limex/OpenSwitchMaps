@@ -1,8 +1,8 @@
 {
-  "name": "OpenSwitchMaps",
-  "version": "1.3.2",
+  "name": "OpenSwitchMaps_limex",
+  "version": "1.3.3",
   "description": "Switch map services, and some useful links for OpenStreetMap contributors",
-  "homepage_url": "https://github.com/tankaru/OpenSwitchMap",
+  "homepage_url": "https://github.com/limex/OpenSwitchMap",
   "permissions": ["activeTab", "tabs", "storage"],
   "background": {
     "scripts": ["background.js"]

@@ -11,8 +11,8 @@
         v-for="map in maps"
         class="map"
         :key="map.name"
-        @click.left="openMapInCurrentTab(map)"
-        @click.middle="openMapInOtherTab(map)"
+        @click.middle="openMapInCurrentTab(map)"
+        @click.left="openMapInOtherTab(map)"
       >
         <img :src="'http://www.google.com/s2/favicons?domain=' + map.domain">
         {{ map.name }}

@@ -216,6 +216,23 @@ const maps = [
 
   },
   {
+    name: "Waymarked Trails",
+    category: OTHER_CATEGORY,
+    default_check: true,
+    domain: "hiking.waymarkedtrails.org",
+    description: "Show hiking, cycling, ski routes",
+    getUrl(lat, lon, zoom) {
+      return 'https://hiking.waymarkedtrails.org/#?map=' + zoom + '!' + lat + '!' + lon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/waymarkedtrails\.org\/#.*\?map=(\d{1,2})!(-?\d[0-9.]*)!(-?\d[0-9.]*)/);
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     name: "Overpass-turbo",
     category: UTILITY_CATEGORY,
     default_check: true,
@@ -304,29 +321,29 @@ const maps = [
     },
   },
   {
+    name: "map.orhyginal",
+    category: PORTAL_CATEGORY,
+    default_check: false,
+    domain: "orhyginal.fr",
+    description: "Portal of many map services",
+    getUrl(lat, lon, zoom) {
+      return 'http://map.orhyginal.fr/#' + zoom + '/' + lat + '/' + lon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/map\.orhyginal\.fr.*#(\d[0-9]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     name: "Ingress Intel map",
     category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "intel.ingress.com",
     getUrl(lat, lon, zoom) {
       return 'https://intel.ingress.com/intel?ll=' + lat + ',' + lon + '&z=' + zoom;
-    },
-  },
-  {
-    name: "Waymarked Trails",
-    category: OTHER_CATEGORY,
-    default_check: true,
-    domain: "hiking.waymarkedtrails.org",
-    description: "Show hiking, cycling, ski routes",
-    getUrl(lat, lon, zoom) {
-      return 'https://hiking.waymarkedtrails.org/#?map=' + zoom + '!' + lat + '!' + lon;
-    },
-    getLatLonZoom(url) {
-      const match = url.match(/waymarkedtrails\.org\/#.*\?map=(\d{1,2})!(-?\d[0-9.]*)!(-?\d[0-9.]*)/);
-      if (match) {
-        const [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
-      }
     },
   },
   {
@@ -999,23 +1016,6 @@ const maps = [
       return 'https://www.waze.com/editor?lon=' + lon + '&lat=' + lat + '&zoom=7';
     },
 
-  },
-  {
-    name: "map.orhyginal",
-    category: PORTAL_CATEGORY,
-    default_check: false,
-    domain: "orhyginal.fr",
-    description: "Portal of many map services",
-    getUrl(lat, lon, zoom) {
-      return 'http://map.orhyginal.fr/#' + zoom + '/' + lat + '/' + lon;
-    },
-    getLatLonZoom(url) {
-      const match = url.match(/map\.orhyginal\.fr.*#(\d[0-9]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
-      if (match) {
-        const [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
-      }
-    },
   },
   {
     name: "here maps",
