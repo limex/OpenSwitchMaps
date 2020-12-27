@@ -233,6 +233,96 @@ const maps = [
     },
   },
   {
+    name: "CamperMap",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://umap.openstreetmap.fr",
+    description: "Camper POIs",
+    getUrl(lat, lon, zoom) {
+      return 'https://umap.openstreetmap.fr/en/map/campermap_514529#' + zoom + '/' + lat + '/' + lon;
+    },
+  },
+  {
+    name: "OpenCampingMap",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://opencampingmap.org",
+    description: "Camping Sites",
+    getUrl(lat, lon, zoom) {
+      return 'https://opencampingmap.org/#' + zoom + '/' + lat + '/' + lon;
+    },
+  },
+  {
+    name: "OpenSkiMap",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://openskimap.org",
+    description: "Ski Slopes, Nordic Ski Trails",
+    getUrl(lat, lon, zoom) {
+      return 'https://openskimap.org/#' + zoom + '/' + lat + '/' + lon;
+    },
+  },
+  {
+    name: "Mapy.cz (GeoPhoto)",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://en.mapy.cz",
+    description: "Outdoor with geotagged Pics",
+    getUrl(lat, lon, zoom) {
+      return 'https://en.mapy.cz/fotografie?x=' + lon + '&y=' + lat + '&z=' + zoom + '&l=0';
+    },
+  },
+  {
+    name: "Zoom Earth",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://zoom.earth",
+    description: "Daily Sat Images",
+    getUrl(lat, lon, zoom) {
+      return 'https://zoom.earth/#view=' + lat + ',' + lon +',' + zoom + 'z';
+    },
+  },
+  {
+    name: "mtbmap.cz",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "http://mtbmap.cz",
+    description: "MTB Map",
+    getUrl(lat, lon, zoom) {
+      return 'http://mtbmap.cz/#zoom=' + zoom + '&lat=' + lat + '&lon=' + lon;
+    },
+  },
+  {
+    name: "XS Trails (XC)",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://www.xctrails.org",
+    description: "XC Skiing",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=xc';
+    },
+  },
+  {
+    name: "XS Trails (Climb)",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://www.xctrails.org",
+    description: "XC Skiing",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=allferrata';
+    },
+  },
+  {
+    name: "XS Trails (Ski Mountaineering)",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://www.xctrails.org",
+    description: "XC Skiing",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=skitour';
+    },
+  },
+  {
     name: "Overpass-turbo",
     category: UTILITY_CATEGORY,
     default_check: true,
@@ -335,6 +425,16 @@ const maps = [
         const [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
       }
+    },
+  },
+  {
+    name: "NaKarte",
+    category: PORTAL_CATEGORY,
+    default_check: false,
+    domain: "https://nakarte.me",
+    description: "Misc. Maps (Strava Heatmaps,...)",
+    getUrl(lat, lon, zoom) {
+      return 'https://nakarte.me/#m=' + zoom + '/' + lat + '/' + lon + '&l=Czt/Sr';
     },
   },
   {
@@ -751,24 +851,6 @@ const maps = [
     },
   },
   {
-    name: "OpenTripMap",
-    category: OTHER_CATEGORY,
-    default_check: false,
-    domain: "opentripmap.com",
-    getUrl(lat, lon, zoom) {
-      return 'https://opentripmap.com/en/#' + zoom + '/' + lat + '/' + lon;
-    },
-    getLatLonZoom(url) {
-      const match = url.match(/opentripmap\.com\/(.*)\/#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
-      if (match) {
-        let [, lang, zoom, lat, lon] = match;
-        zoom = Math.round(Number(zoom));
-        return [lat, lon, zoom];
-      }
-    },
-  },
-
-  {
     name: "Open Infrastructure Map",
     category: OTHER_CATEGORY,
     default_check: false,
@@ -1067,24 +1149,6 @@ const maps = [
       }
     },
   },
-
-  {
-    name: "Zoom Earth",
-    category: OTHER_CATEGORY,
-    default_check: false,
-    domain: "zoom.earth",
-    description: "Historic and live satellite images",
-    getUrl(lat, lon, zoom) {
-      return 'https://zoom.earth/#view=' + lat + ',' + lon + ',' + zoom + 'z';
-    },
-    getLatLonZoom(url) {
-      const match = url.match(/zoom\.earth\/#view=(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})z/);
-      if (match) {
-        const [, lat, lon, zoom] = match;
-        return [lat, lon, zoom];
-      }
-    },
-  },
   {
     name: "GeoHack",
     category: PORTAL_CATEGORY,
@@ -1278,25 +1342,6 @@ const maps = [
     },
     getLatLonZoom(url) {
       const match = url.match(/disaster\.ninja\/live\/#.*position=(-?\d[0-9.]*),(-?\d[0-9.]*);zoom=(\d{1,2})/);
-
-      if (match) {
-        const [, lon, lat, zoom] = match;
-        return [lat, lon, zoom];
-      }
-    },
-  },
-  {//https://en.mapy.cz/zakladni?x=139.7624242&y=35.6819532&z=16
-    name: "MAPY.CZ",
-    category: OTHER_CATEGORY,
-    default_check: false,
-    domain: "mapy.cz",
-    description: "",
-    getUrl(lat, lon, zoom) {
-      return 'https://en.mapy.cz/zakladni?x=' + lon + '&y=' + lat + '&z=' + zoom;
-
-    },
-    getLatLonZoom(url) {
-      const match = url.match(/mapy\.cz\/zakladni\?x=(-?\d[0-9.]*)&y=(-?\d[0-9.]*)&z=(\d{1,2})/);
 
       if (match) {
         const [, lon, lat, zoom] = match;
@@ -1688,7 +1733,7 @@ const maps = [
       domain: "lightningmaps.org",
       description: "Realtime lightning map",
       getUrl(lat, lon, zoom) {
-        return `http://www.lightningmaps.org/#m=oss;t=3;s=0;o=0;b=;ts=0;y=${lat};x=${lon};z=${Math.min(zoom, 15)};d=2;dl=2;dc=0`;
+        return `https://www.lightningmaps.org/#m=oss;t=3;s=0;o=0;b=;ts=0;y=${lat};x=${lon};z=${Math.min(zoom, 15)};d=2;dl=2;dc=0`;
 
       },
       getLatLonZoom(url) {
