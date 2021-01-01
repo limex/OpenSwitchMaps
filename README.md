@@ -4,7 +4,7 @@ Greatly contributed by jazzzz. Thanks!
 This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!!
 
 ## Motivation for clone
-+ Too many outdated maps, some cleanup done.
++ Outdated maps, some cleanup done. Added new maps
 + Switched behavour in the Map Popup: Left Click now opens in new Tab, Middle Click opens in same Tab
 
 ## Install
