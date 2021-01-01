@@ -1142,7 +1142,7 @@ const maps = [
       return 'https://www.openstreetmap.org/edit?editor=id#map=' + z + '/' + lat + '/' + lon;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/openstreetmap\.org\/edit\?editor=id#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
       if (match) {
         let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -1171,16 +1171,9 @@ const maps = [
     name: "Apple maps (for Apple device)",
     category: APP_CATEGORY,
     default_check: false,
-    domain: "apple.com/",
+    domain: "apple.com",
     getUrl(lat, lon, zoom) {
       return 'http://maps.apple.com/?ll=' + lat + ',' + lon + '&z=' + zoom;
-    },
-    getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
-      if (match) {
-        let [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
-      }
     },
   },
   {
@@ -1294,10 +1287,10 @@ const maps = [
       return 'https://tools.wmflabs.org/geohack/geohack.php?params=' + lat + '_N_' + lon + '_E_scale:' + Math.round(100000 * Math.pow(2, 12 - Number(zoom)));
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/geohack.toolforge\.org\/geohack\.php\?params=(-?\d[0-9.]*)_N_(-?\d[0-9.]*)/);
       if (match) {
-        let [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
+        let [, lat, lon] = match;
+        return [lat, lon, 15];
       }
     },
   },
@@ -1637,7 +1630,7 @@ const maps = [
       return 'http://www.opensnowmap.org/?zoom=' + zoom + '&lat=' + lat + '&lon=' + lon;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/opensnowmap\.org.*\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
       if (match) {
         let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -1654,7 +1647,7 @@ const maps = [
       return 'http://www.opencyclemap.org/?zoom=' + zoom + '&lat=' + lat + '&lon=' + lon;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/opencyclemap\.org.*\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
       if (match) {
         let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -1671,7 +1664,7 @@ const maps = [
       return 'http://gk.historic.place/historische_objekte/translate/en/index-en.html?zoom=' + zoom + '&lat=' + lat + '&lon=' + lon;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/gk.historic.place\/historische_objekte\/translate\/en\/index-en.html\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
       if (match) {
         let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -1734,7 +1727,7 @@ const maps = [
       return 'http://map.openseamap.org/?zoom=' + Math.min(Number(zoom), 18) + '&lat=' + lat + '&lon=' + lon;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/map\.openseamap\.org\/\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
       if (match) {
         let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -1862,13 +1855,6 @@ const maps = [
       getUrl(lat, lon, zoom) {
         return `http://qa.poole.ch/?zoom=${zoom}&lat=${lat}&lon=${lon}`;
 
-      },
-      getLatLonZoom(url) {
-        //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
-        if (match) {
-          let [, zoom, lat, lon] = match;
-          return [lat, lon, zoom];
-        }
       },
     },
     { //http://www.xn--pnvkarte-m4a.de/?#139.781;35.4722;10
