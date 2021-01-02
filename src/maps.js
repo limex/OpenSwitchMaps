@@ -335,9 +335,9 @@ const maps = [
       return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=xc';
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/www\.xctrails\.org.*lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lat, lon, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -352,9 +352,9 @@ const maps = [
       return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=allferrata';
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/www\.xctrails\.org.*lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lat, lon, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -369,9 +369,9 @@ const maps = [
       return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=skitour';
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/www\.xctrails\.org.*lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lat, lon, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -385,13 +385,6 @@ const maps = [
     getUrl(lat, lon, zoom) {
       return 'http://overpass-turbo.eu/?Q=&C=' + lat + ';' + lon + ';' + zoom;
     },
-    getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
-      if (match) {
-        let [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
-      }
-    },    
   },
   {
     name: "Osmose",
@@ -439,9 +432,9 @@ const maps = [
       return 'http://tools.geofabrik.de/osmi/?view=geometry&lon=' + lon + '&lat=' + lat + '&zoom=' + zoom;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/tools\.geofabrik\.de.*lon=(-?\d[0-9.]*)&lat=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -542,7 +535,7 @@ const maps = [
       return 'https://intel.ingress.com/intel?ll=' + lat + ',' + lon + '&z=' + zoom;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/intel\.ingress\.com.*ll=(-?\d[0-9.]*),(-?\d[0-9.]*)&z=(\d{1,2})/);
       if (match) {
         let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -745,9 +738,9 @@ const maps = [
       return 'https://www.geoportail.gouv.fr/carte?c=' + lon + ',' + lat + '&z=' + zoom + '&l0=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR.CV::GEOPORTAIL:OGC:WMTS(1)&permalink=yes';
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/geoportail\.gouv\.fr\/carte\?c=(-?\d[0-9.]*),(-?\d[0-9.]*)&z=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -763,10 +756,10 @@ const maps = [
       return 'https://stdkmd.net/sat/?cr=' + d + '&lang=en&ll=' + lat + '%2C' + lon;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/stdkmd\.net\/sat\/\?cr=(\d{1,2}).*&ll=(-?\d[0-9.]*)%2C(-?\d[0-9.]*)/);
       if (match) {
         let [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
+        return [lat, lon, 15];
       }
     },    
   },
@@ -1057,9 +1050,9 @@ const maps = [
       return 'https://map.openaerialmap.org/#/' + lon + ',' + lat + ',' + zoom;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/map\.openaerialmap\.org\/#\/(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },
@@ -1204,9 +1197,9 @@ const maps = [
       return 'https://www.waze.com/ul?ll=' + lat + '%2C' + lon + '&navigate=yes&zoom=' + zoom;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/waze\.com\/.*?latlng=(-?\d[0-9.]*)%2C(-?\d[0-9.]*).*&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -1220,9 +1213,9 @@ const maps = [
       return 'https://www.waze.com/editor?lon=' + lon + '&lat=' + lat + '&zoom=7';
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/waze\.com\/.*?lon=(-?\d[0-9.]*)&lat=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },
@@ -1387,9 +1380,9 @@ const maps = [
       return 'https://www.flickr.com/map?&fLat=' + lat + '&fLon=' + lon + '&zl=' + zoom;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/flickr\.com\/map\?&fLat=(-?\d[0-9.]*)&fLon=(-?\d[0-9.]*)&zl=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },
@@ -1406,9 +1399,10 @@ const maps = [
       return 'http://osm-analytics.org/#/show/bbox:' + minlon + ',' + minlat + ',' + maxlon + ',' + maxlat + '/buildings/recency';
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/osm-analytics\.org\/#\/show\/bbox:(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, minlon, minlat, maxlon, maxlat] = match;
+        [lat, lon, zoom] = bboxToLatLonZoom(minlon, minlat, maxlon, maxlat)
         return [lat, lon, zoom];
       }
     },
@@ -1459,9 +1453,9 @@ const maps = [
       return 'https://map.meurisse.org/?lon=' + lon + '&lng=' + lon + '&lat=' + lat + '&zoom=' + Math.min(Number(zoom), 18);
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/map\.meurisse\.org\/\?lon=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&lat=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lon, foo, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },    
@@ -1579,9 +1573,9 @@ const maps = [
       return 'https://www.viamichelin.com/web/maps?position=' + lat + ';' + lon + ';' + zoom;
     },
     getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      const match = url.match(/viamichelin\.com\/.*\?position=(-?\d[0-9.]*);(-?\d[0-9.]*);(\d{1,2})/);
       if (match) {
-        let [, zoom, lat, lon] = match;
+        let [, lat, lon, zoom] = match;
         return [lat, lon, zoom];
       }
     },
@@ -1594,13 +1588,6 @@ const maps = [
     domain: "baidu.com",
     getUrl(lat, lon, zoom) {
       return 'http://map.baidu.com/?latlng=' + lat + ',' + lon;
-    },
-    getLatLonZoom(url) {
-      //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
-      if (match) {
-        let [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
-      }
     },
   },
   {//https://osmaps.ordnancesurvey.co.uk/51.39378,0.13892,10
@@ -1904,15 +1891,15 @@ const maps = [
 
       },
       getLatLonZoom(url) {
-        //const match = url.match(/osmose\.openstreetmap\.fr.*#zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+        const match = url.match(/trailrouter\.com\/#wps=(-?\d[0-9.]*),(-?\d[0-9.]*)/);
         if (match) {
-          let [, zoom, lat, lon] = match;
-          return [lat, lon, zoom];
+          let [, lat, lon] = match;
+          return [lat, lon, 16];
         }
       },
     },
     { //https://cmap.dev/#9/36.0757/139.8477
-      name: "cmap.dev: リアルタイム被害予測(JP)",
+      name: "cmap.dev Hazard",
       category: OTHER_CATEGORY,
       default_check: false,
       domain: "cmap.dev",

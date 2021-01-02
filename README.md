@@ -1,16 +1,20 @@
 # OpenSwitchMaps
 Map service switcher for Chrome/Firefox extension
-Greatly contributed by jazzzz. Thanks!
-This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!!
+Greatly contributed by jazzzz.
+This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!!  Thanks! A very good foundation for my fork!
 
 ## Motivation for clone
-+ Outdated maps, some cleanup done. Added new maps
++ Some cleanup done. Added new maps
++ Most of the maps didn't calculate the lat/lon/zoom calculation that is needed to open a new map from.
++ Chanced the Categories, because some grew to big, while others remained small.
 + Switched behavour in the Map Popup: Left Click now opens in new Tab, Middle Click opens in same Tab
 
 ## Install
 ### from Browser plugin
+outdated! for version [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
 + [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmaps/cfkddjlocfecchnemnnmmpdjcohgmkij)
 + [Firefox addon center](https://addons.mozilla.org/ja/firefox/addon/openswitchmaps/)
+
 ### from source code
 This extention uses Node.js
 1. Install Node.js
@@ -23,29 +27,32 @@ This extention uses Node.js
 ## How to use
 1. Open Google map, for example
 1. You will see a green earth icon near URL bar. Click it.
-1. Select OpenStreetMap, for example
+1. Select OpenStreetMap, for example.
 1. You can jump to OpenStreetMap at the same position
-1. Left click: Open in the same tab. Middle click: Open a new tab.
+1. Left click: Open in a new tab. Middle click: Open the same tab.
 
 ## Settings
 Show/hide maps:
 1. Right click the earth icon,
 1. Select "Options"
+1. It might take some seconds for the popup to apear. Collecting all the data takes some time.
 1. Check/uncheck each map to show/hide it.
 
+## ToDo
++ Show Descriptions while MouseOver in Options Popup
 
 ## Screenshots
 Chrome
-
+outdated! for version [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps)
 ![Screenshot of Chrome](Screenshot-chrome.jpg)
 ![Settings](Screenshot-chrome-settings.jpg)
 
 Firefox
-
+outdated! for version [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps)
 ![Screenshot of Firefox](Screenshot-firefox.jpg)
 
 ## Example video
-
+outdated! for version [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps)
 [![Example](http://img.youtube.com/vi/tO87xkc7VaI/0.jpg)](http://www.youtube.com/watch?v=tO87xkc7VaI)
 
 ## Similar softwares
@@ -158,6 +165,7 @@ Firefox
 1. map.orhyginal
 
 ## Japanese descriptions
+outdated! for version [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
 OpenStreetMapを中心に地図サービスを切り替えることができるChrome拡張機能です。
 特にMapillary⇔OSM⇔Googleマップの切り替えが便利かと思います。
 
