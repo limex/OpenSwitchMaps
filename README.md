@@ -3,11 +3,12 @@ Map service switcher for Chrome/Firefox extension
 Greatly contributed by jazzzz.
 This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!!  Thanks! A very good foundation for my fork!
 
-## Motivation for clone
+## Motivation for clone (New Features & Fixes)
 + Some cleanup done. Added new maps
 + Most of the maps didn't calculate the lat/lon/zoom calculation that is needed to open a new map from.
 + Chanced the Categories, because some grew to big, while others remained small.
 + Switched behavour in the Map Popup: Left Click now opens in new Tab, Middle Click opens in same Tab
++ Sorted the Maps by Name
 
 ## Install
 ### from Browser plugin

@@ -26,6 +26,7 @@ const browser = require("webextension-polyfill");
 const {getLatLonZoom, getAllMaps} = require('../maps');
 const storage = require('../options/storage');
 
+
 module.exports = {
   computed: {
     columns() {
@@ -119,7 +120,7 @@ module.exports = {
   
   #mapmenu {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	//width: 450px;
 	//column-count: 3;
   	//display:flex;

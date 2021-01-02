@@ -54,12 +54,23 @@ const MAIN_CATEGORY = "Main maps";
 const UTILITY_CATEGORY = "Utilities";
 const OTHER_CATEGORY = "Other maps";
 const SPECIAL_CATEGORY = "Specials";
-const LOCAL_CATEGORY = "Local maps";
-const OSM_LOCAL_CATEGORY = "OSM local chapter";
-const APP_CATEGORY = "External App";
+const LOCAL_CATEGORY = "Local maps/chapter";
 const PORTAL_CATEGORY = "Map portal";
 
-const maps = [
+function sortByKey(array, key) {
+  return array.sort(function(a, b) { 
+    var x = a[key]; var y = b[key]; 
+    if (typeof x == "string") {
+      x = (""+x).toLowerCase(); 
+    }
+    if (typeof y == "string") {
+      y = (""+y).toLowerCase();
+    }
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  });
+}
+
+const maps_raw = [
   {
     name: "Google Maps",
     category: MAIN_CATEGORY,
@@ -85,9 +96,6 @@ const maps = [
 
     },
   },
-
-
-
   {
     name: "OpenStreetMap",
     category: MAIN_CATEGORY,
@@ -123,7 +131,7 @@ const maps = [
   },
   {
     name: "地理院地図",
-    category: MAIN_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: true,
     domain: "maps.gsi.go.jp",
     description: "Japanese official map",
@@ -140,7 +148,7 @@ const maps = [
   },
   {
     name: "OpenStreetCam",
-    category: MAIN_CATEGORY,
+    category: OTHER_CATEGORY,
     default_check: true,
     domain: "openstreetcam.org",
     description: "Crowdsourced street-level imagery available as CC BY-SA",
@@ -156,7 +164,7 @@ const maps = [
     },
   },
   {
-    name: "F4map",
+    name: "F4map (3D)",
     category: MAIN_CATEGORY,
     default_check: true,
     domain: "f4map.com",
@@ -174,7 +182,7 @@ const maps = [
   },
   {
     name: "Yandex",
-    category: MAIN_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: true,
     domain: "yandex.com",
     getUrl(lat, lon, zoom) {
@@ -190,7 +198,7 @@ const maps = [
   },
   {
     name: "Qwant Maps",
-    category: MAIN_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: true,
     domain: "qwant.com",
     description: "Vector map based on OpenStreetMap data",
@@ -224,7 +232,7 @@ const maps = [
   },
   { // https://umap.openstreetmap.fr/en/map/campermap_514529#15/47.4796122/15.7503233
     name: "CamperMap",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://umap.openstreetmap.fr",
     description: "Camper POIs",
@@ -241,7 +249,7 @@ const maps = [
   },
   { // https://opencampingmap.org/#15/47.4777/15.7536/0/0
     name: "OpenCampingMap",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://opencampingmap.org",
     description: "Camping Sites",
@@ -258,7 +266,7 @@ const maps = [
   },
   { // https://openskimap.org/#15.01/47.47717/15.75636
     name: "OpenSkiMap",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://openskimap.org",
     description: "Ski Slopes, Nordic Ski Trails",
@@ -276,7 +284,7 @@ const maps = [
   },
   { // https://en.mapy.cz/fotografie?x=15.7503858&y=47.4797360&z=15&l=0
     name: "Mapy.cz (GeoPhoto)",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://en.mapy.cz",
     description: "Outdoor with geotagged Pics",
@@ -310,7 +318,7 @@ const maps = [
   },
   {
     name: "mtbmap.cz",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "http://mtbmap.cz",
     description: "MTB Map",
@@ -327,7 +335,7 @@ const maps = [
   },
   {
     name: "XS Trails (XC)",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://www.xctrails.org",
     description: "XC Skiing",
@@ -344,7 +352,7 @@ const maps = [
   },
   {
     name: "XS Trails (Climb)",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://www.xctrails.org",
     description: "XC Skiing",
@@ -361,7 +369,7 @@ const maps = [
   },
   {
     name: "XS Trails (Ski Mountaineering)",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://www.xctrails.org",
     description: "XC Skiing",
@@ -543,7 +551,7 @@ const maps = [
     },    
   },
   {
-    name: "BigMap 2",
+    name: "BigMap 2 (Print)",
     category: UTILITY_CATEGORY,
     default_check: true,
     domain: "osmz.ru",
@@ -562,7 +570,7 @@ const maps = [
   {
     name: "Pic4Carto",
     category: UTILITY_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "pavie.info",
     description: "OpenStreetMap editor using open street level photos",
     getUrl(lat, lon, zoom) {
@@ -580,7 +588,7 @@ const maps = [
 
   {
     name: "JapanMapCompare",
-    category: UTILITY_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: true,
     domain: "mapcompare.jp",
     description: "Compare maps side-by-side",
@@ -632,7 +640,7 @@ const maps = [
   },
   {
     name: "OSM.de",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "www.openstreetmap.de",
     description: "OpenStreetMap German local chapter",
@@ -649,7 +657,7 @@ const maps = [
   },
   {
     name: "OSM.ru",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.ru",
     description: "OpenStreetMap Russia local chapter",
@@ -666,7 +674,7 @@ const maps = [
   },
   {
     name: "OSM.jp",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.jp",
     description: "OpenStreetMap Japan local chapter",
@@ -683,7 +691,7 @@ const maps = [
   },
   {
     name: "OSM.ch",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.ch",
     description: "OpenStreetMap Switzerland local chapter",
@@ -695,7 +703,7 @@ const maps = [
 
   {
     name: "OSM.in",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.in",
     description: "OpenStreetMap India local chapter",
@@ -713,7 +721,7 @@ const maps = [
 
   {
     name: "OSM.cl",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.cl",
     description: "OpenStreetMap Chile local chapter",
@@ -768,6 +776,7 @@ const maps = [
     category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "earth.nullschool.net",
+    description: "Wind, Ocean, Chem, Particulates",
     getUrl(lat, lon, zoom) {
       return 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=' + lon + ',' + lat + ',' + 11.1 * zoom ** 3.12;
     },
@@ -853,7 +862,7 @@ const maps = [
 
   {
     name: "CyclOSM",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: true,
     domain: "cyclosm.org",
     getUrl(lat, lon, zoom) {
@@ -870,7 +879,7 @@ const maps = [
 
   { // https://opentopomap.org/#map=15/47.47960/15.75030
     name: "OpenTopoMap",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: true,
     domain: "opentopomap.org",
     getUrl(lat, lon, zoom) {
@@ -904,7 +913,7 @@ const maps = [
   },
 
   {
-    name: "Macrostrat",
+    name: "Macrostrat (Geology)",
     category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "macrostrat.org",
@@ -1033,7 +1042,7 @@ const maps = [
   },
   {
     name: "聖地巡礼マップ",
-    category: SPECIAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "seichimap.jp",
     description: "Anime location search",
@@ -1078,7 +1087,7 @@ const maps = [
 
   {
     name: "Localwiki",
-    category: SPECIAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "localwiki.org",
     getUrl(lat, lon, zoom) {
@@ -1111,7 +1120,7 @@ const maps = [
 
   {
     name: "Launch JOSM",
-    category: APP_CATEGORY,
+    category: UTILITY_CATEGORY,
     default_check: false,
     domain: "josm.openstreetmap.de",
     description: "OpenStreetMap desktop editor",
@@ -1125,7 +1134,7 @@ const maps = [
 
   {
     name: "Launch iD editor",
-    category: APP_CATEGORY,
+    category: UTILITY_CATEGORY,
     default_check: false,
     domain: "ideditor.com/",
     description: "OpenStreetMap online editor",
@@ -1145,7 +1154,7 @@ const maps = [
 
   {//https://mapwith.ai/rapid#background=fb-mapwithai-maxar&disable_features=boundaries&map=17.60/38.00488/140.85905
     name: "Launch RapiD editor",
-    category: APP_CATEGORY,
+    category: UTILITY_CATEGORY,
     default_check: false,
     domain: "mapwith.ai",
     description: "Facebook AI assisted OSM editor",
@@ -1162,7 +1171,7 @@ const maps = [
   },
   {
     name: "Apple maps (for Apple device)",
-    category: APP_CATEGORY,
+    category: UTILITY_CATEGORY,
     default_check: false,
     domain: "apple.com",
     getUrl(lat, lon, zoom) {
@@ -1206,7 +1215,7 @@ const maps = [
   },
   {
     name: "Launch waze map editor",
-    category: APP_CATEGORY,
+    category: UTILITY_CATEGORY,
     default_check: false,
     domain: "waze.com",
     getUrl(lat, lon, zoom) {
@@ -1253,7 +1262,7 @@ const maps = [
     },
   },
   {
-    name: "Copernix",
+    name: "Copernix (POI)",
     category: OTHER_CATEGORY,
     default_check: false,
     domain: "copernix.io",
@@ -1361,7 +1370,7 @@ const maps = [
   },
   {
     name: "Twitter",
-    category: SPECIAL_CATEGORY,
+    category: OTHER_CATEGORY,
     default_check: false,
     domain: "twitter.com",
     description: "Twitter location based search",
@@ -1408,7 +1417,7 @@ const maps = [
     },
   },
   {//https://firms.modaps.eosdis.nasa.gov/map/#z:9;c:139.9,35.7;d:2020-01-06..2020-01-07
-    name: "FIRMS",
+    name: "FIRMS (Fire)",
     category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "nasa.gov",
@@ -1531,7 +1540,7 @@ const maps = [
   },
   {//https://www.peakfinder.org/?lat=46.6052&lng=8.3217&azi=0&zoom=4&ele=1648
     name: "PeakFinder",
-    category: SPECIAL_CATEGORY,
+    category: OTHER_CATEGORY,
     default_check: false,
     domain: "peakfinder.org",
     description: "Mountain landscape view map",
@@ -1583,7 +1592,7 @@ const maps = [
 
   {//http://map.baidu.com/?latlng=35.6777,139.7588
     name: "Baidu",
-    category: MAIN_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "baidu.com",
     getUrl(lat, lon, zoom) {
@@ -1609,7 +1618,7 @@ const maps = [
 
   {//http://www.opensnowmap.org/?zoom=17&lat=43.08561&lon=141.33047
     name: "OpenSnowMap",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "opensnowmap.org",
     description: "Winter sports map",
@@ -1626,7 +1635,7 @@ const maps = [
   },
   {//http://www.opencyclemap.org/?zoom=17&lat=43.08561&lon=141.33047
     name: "OpenCycleMap",
-    category: OTHER_CATEGORY,
+    category: MAIN_CATEGORY,
     default_check: false,
     domain: "opencyclemap.org",
     description: "Cycling map",
@@ -1677,7 +1686,7 @@ const maps = [
   },
   {//https://openstreetmap.org.ar/#8.93/35.5727/139.4429
     name: "OSM.org.ar",
-    category: OSM_LOCAL_CATEGORY,
+    category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.org.ar",
     description: "",
@@ -1694,7 +1703,7 @@ const maps = [
   },
   {//https://www.yelp.com/search?l=g%3A139.74862972962964%2C35.60176325581224%2C139.64666287171949%2C35.483875357833384
     name: "yelp",
-    category: OTHER_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "yelp.com",
     description: "Local review",
@@ -1863,8 +1872,8 @@ const maps = [
       },
     },
     { //http://www.lightningmaps.org/#m=oss;t=3;s=0;o=0;b=;ts=0;y=35.5065;x=139.8395;z=10;d=2;dl=2;dc=0;
-      name: "LightningMaps.org",
-      category: OTHER_CATEGORY,
+      name: "LightningMaps",
+      category: SPECIAL_CATEGORY,
       default_check: false,
       domain: "lightningmaps.org",
       description: "Realtime lightning map",
@@ -1917,7 +1926,7 @@ const maps = [
       },
     },
     { //http://beacons.schmirler.de/en/world.html#map=11/35.315176983316775/139.7419591178308&layers=OS5&details=18
-      name: "Lights of the sea online",
+      name: "Sea Beacons",
       category: OTHER_CATEGORY,
       default_check: false,
       domain: "schmirler.de",
@@ -1935,3 +1944,5 @@ const maps = [
       },
     },
 ];
+
+const maps = sortByKey(maps_raw,"name");
