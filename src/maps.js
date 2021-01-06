@@ -164,7 +164,7 @@ const maps_raw = [
     },
   },
   {
-    name: "F4map (3D)",
+    name: "F4map",
     category: MAIN_CATEGORY,
     default_check: true,
     domain: "f4map.com",
@@ -283,7 +283,7 @@ const maps_raw = [
     },
   },
   { // https://en.mapy.cz/fotografie?x=15.7503858&y=47.4797360&z=15&l=0
-    name: "Mapy.cz (GeoPhoto)",
+    name: "Mapy.cz",
     category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://en.mapy.cz",
@@ -321,7 +321,7 @@ const maps_raw = [
     category: MAIN_CATEGORY,
     default_check: false,
     domain: "http://mtbmap.cz",
-    description: "MTB Map",
+    description: "Mountain Bike Map",
     getUrl(lat, lon, zoom) {
       return 'http://mtbmap.cz/#zoom=' + zoom + '&lat=' + lat + '&lon=' + lon;
     },
@@ -338,7 +338,7 @@ const maps_raw = [
     category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://www.xctrails.org",
-    description: "XC Skiing",
+    description: "Cross Country Skiing",
     getUrl(lat, lon, zoom) {
       return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=xc';
     },
@@ -355,7 +355,7 @@ const maps_raw = [
     category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://www.xctrails.org",
-    description: "XC Skiing",
+    description: "Rock Climbing",
     getUrl(lat, lon, zoom) {
       return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=allferrata';
     },
@@ -368,11 +368,11 @@ const maps_raw = [
     },    
   },
   {
-    name: "XS Trails (Ski Mountaineering)",
+    name: "XS Trails (Ski)",
     category: MAIN_CATEGORY,
     default_check: false,
     domain: "https://www.xctrails.org",
-    description: "XC Skiing",
+    description: "Backcountry Ski Mountaineering",
     getUrl(lat, lon, zoom) {
       return 'https://www.xctrails.org/map/map.html?lat=' + lat + '&lon=' + lon + '&zoom=' + zoom + '&type=skitour';
     },
@@ -980,10 +980,11 @@ const maps_raw = [
     },
   },
   {
-    name: "Open Infrastructure Map",
+    name: "Open Infrastructure",
     category: OTHER_CATEGORY,
     default_check: false,
     domain: "openinframap.org",
+    description: "World's hidden infrastructure (Train, Power, Mobile, ...)",
     getUrl(lat, lon, zoom) {
       return 'https://openinframap.org/#' + zoom + '/' + lat + '/' + lon;
     },
@@ -1170,10 +1171,11 @@ const maps_raw = [
     },
   },
   {
-    name: "Apple maps (for Apple device)",
+    name: "Apple maps",
     category: UTILITY_CATEGORY,
     default_check: false,
     domain: "apple.com",
+    description: "only on Apple devices)",
     getUrl(lat, lon, zoom) {
       return 'http://maps.apple.com/?ll=' + lat + ',' + lon + '&z=' + zoom;
     },
@@ -1689,7 +1691,7 @@ const maps_raw = [
     category: LOCAL_CATEGORY,
     default_check: false,
     domain: "openstreetmap.org.ar",
-    description: "",
+    description: "Argentina Chapter",
     getUrl(lat, lon, zoom) {
       return 'https://openstreetmap.org.ar/#' + zoom + '/' + lat + '/' + lon;
     },
