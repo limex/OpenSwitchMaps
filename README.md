@@ -9,12 +9,14 @@ This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSw
 + Chanced the Categories, because some grew to big, while others remained small.
 + Switched behavour in the Map Popup: Left Click now opens in new Tab, Middle Click opens in same Tab
 + Sorted the Maps by Name
++ Show Descriptions while MouseOver in Options Popup
 
 ## Install
 ### from Browser plugin
 outdated! for version [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
 + [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmaps/cfkddjlocfecchnemnnmmpdjcohgmkij)
 + [Firefox addon center](https://addons.mozilla.org/ja/firefox/addon/openswitchmaps/)
++ Dialogs on *first* click take some seconds to show up.  Be patient. :)
 
 ### from source code
 This extention uses Node.js
@@ -40,7 +42,7 @@ Show/hide maps:
 1. Check/uncheck each map to show/hide it.
 
 ## ToDo
-+ Show Descriptions while MouseOver in Options Popup
++ ??
 
 ## Screenshots
 Chrome

@@ -201,7 +201,7 @@ const maps_raw = [
     category: LOCAL_CATEGORY,
     default_check: true,
     domain: "qwant.com",
-    description: "Vector map based on OpenStreetMap data",
+    description: "Vector map",
     getUrl(lat, lon, zoom) {
       return 'https://www.qwant.com/maps/#map=' + zoom + '/' + lat + '/' + lon;
     },
@@ -282,6 +282,25 @@ const maps_raw = [
       }
     },
   },
+  { // https://www.komoot.com/plan/@47.9126603,16.4678192,10z
+    name: "Komoot",
+    category: MAIN_CATEGORY,
+    default_check: true,
+    domain: "https://www.komoot.com",
+    description: "Discover & Plan for multiple Sports",
+    getUrl(lat, lon, zoom) {
+      zoom = Math.round(zoom);
+      return 'https://www.komoot.com/plan/@' + lat + ',' + lon + ',' + zoom + 'z';
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/komoot\.com\/plan\/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})/);
+      if (match) {
+        const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+
   { // https://en.mapy.cz/fotografie?x=15.7503858&y=47.4797360&z=15&l=0
     name: "Mapy.cz",
     category: MAIN_CATEGORY,
@@ -399,7 +418,7 @@ const maps_raw = [
     category: UTILITY_CATEGORY,
     default_check: true,
     domain: "osmose.openstreetmap.fr",
-    description: "OpenStreetMap QA tool",
+    description: "OSM QA tool",
     getUrl(lat, lon, zoom) {
       return 'http://osmose.openstreetmap.fr/map/#zoom=' + zoom + '&lat=' + lat + '&lon=' + lon;
     },
@@ -535,10 +554,136 @@ const maps_raw = [
     },    
   },
   {
+    name: "Trailforks",
+    category: OTHER_CATEGORY,
+    default_check: false,
+    domain: "https://www.trailforks.com",
+    description: "Outdoor Sport Trails",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.trailforks.com/map/?z=' + zoom + '&lat=' + lat + '&lon=' + lon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/trailforks\.com\/map\/\?z=(-?\d[0-9.]*)&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/);
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },    
+  },
+  { // https://www.ventusky.com/?p=47.477;15.749;15&l=temperature-2m&t=20210110/12
+    name: "Ventusky",
+    category: SPECIAL_CATEGORY,
+    default_check: false,
+    domain: "https://www.ventusky.com",
+    description: "Weather, Wind, Snow, Waves, Rain, ...",
+    getUrl(lat, lon, zoom) {
+      // return 'https://www.ventusky.com/?p=' + lat + ';' + lon + ';' + zoom;
+      return 'https://www.ventusky.com/?p=' + lat + ';' + lon + ';10';
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/ventusky\.com\/\?p=(-?\d[0-9.]*);(-?\d[0-9.]*);(\d{1,2})/);
+      if (match) {
+        let [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },    
+  },
+  { // https://www.meteoblue.com/en/weather/webmap/?mapcenter=-49.7529N-4.6143&zoom=4
+    // https://www.meteoblue.com/en/weather/webmap/46.915N15.024E1464_Europe%2FVienna?variable=precipitation3h_cloudcover_pressure&level=surface&lines=none&mapcenter=43.6619N16.5502&zoom=10
+    name: "Meteoblue Map",
+    category: SPECIAL_CATEGORY,
+    description: "7d Forecast, Maps Wind, Snow, Waves, Rain, ...",
+    default_check: false,
+    domain: "https://www.meteoblue.com",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.meteoblue.com/en/weather/webmap/?mapcenter=' + lat + 'N' + lon + '&zoom=' + zoom;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/meteoblue\.com\/.*?mapcenter=(-?\d[0-9.]*)N(-?\d[0-9.]*)&zoom=(\d{1,2})/);
+      if (match) {
+        let [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },    
+  },
+  { // https://www.meteoblue.com/en/weather/forecast/multimodel/-17.044N-63.215
+    // https://www.meteoblue.com/en/weather/forecast/multimodel/43.6619N16.5502E
+    // https://www.meteoblue.com/en/weather/forecast/multimodel/-17.044N-63.215E245_America%2FLa_Paz
+    name: "Meteoblue Multi",
+    category: SPECIAL_CATEGORY,
+    description: "Multi Model 7d Forecast",
+    default_check: false,
+    domain: "https://www.meteoblue.com",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.meteoblue.com/en/weather/forecast/multimodel/' + lat + 'N' + lon + 'E';
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/meteoblue\.com\/.*multimodel\/(-?\d[0-9.]*)[NS](-?\d[0-9.]*)[EW]/);
+      if (match) {
+        let [, lat, lon] = match;
+        return [lat, lon, 12];
+      }
+    },    
+  },
+  { // https://www.windy.com/webcams/map?48.217,16.394,9
+    // https://www.windy.com/webcams/map?48.217,16.394,9,i:pressure 
+    // https://www.windy.com/-Webcams/Austria/Lower-Austria/Ollersbach/Nieder-%C3%96sterreich/webcams/1437829077?48.188,14.208,8,i:pressure
+    name: "webcam.travel",
+    category: SPECIAL_CATEGORY,
+    description: "WebCams on WeatherMap",
+    default_check: false,
+    domain: "https://www.windy.com",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.windy.com/webcams/map?' + lat + ',' + lon + ',' + zoom;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/windy\.com.*\/webcams\/.*\?(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2}),/);
+      if (match) {
+        let [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },    
+  },
+  { // https://www.bergfex.at/?mapstate=47.420654,13.1286,8,o,385,47.420654,13.1286
+    name: "Bergfex",
+    category: MAIN_CATEGORY,
+    description: "Topo, Tracks, Tourism",
+    default_check: false,
+    domain: "https://www.bergfex.at",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.bergfex.at/?mapstate=' + lat + ',' + lon + ',' + zoom + ',o,0,' + lat + ',' + lon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/bergfex\.at\/\?mapstate=?(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2}),/);
+      if (match) {
+        let [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },    
+  },
+  { // https://www.4umaps.com/map.htm?zoom=14&lat=46.72587&lon=14.46407&layers=B00
+    name: "4umaps",
+    category: MAIN_CATEGORY,
+    description: "Topo, Trail difficulty",
+    default_check: false,
+    domain: "https://www.4umaps.com",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.4umaps.com/map.htm?zoom=' + zoom + '&lat=' + lat + '&lon=' + lon + '&layers=B00';
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/4umaps\.com\/map.htm\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)&layers=B00/);
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },    
+  },
+  {
     name: "Ingress Intel map",
     category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "intel.ingress.com",
+    description: "Game Map",
     getUrl(lat, lon, zoom) {
       return 'https://intel.ingress.com/intel?ll=' + lat + ',' + lon + '&z=' + zoom;
     },
@@ -1175,7 +1320,7 @@ const maps_raw = [
     category: UTILITY_CATEGORY,
     default_check: false,
     domain: "apple.com",
-    description: "only on Apple devices)",
+    description: "only on Apple devices",
     getUrl(lat, lon, zoom) {
       return 'http://maps.apple.com/?ll=' + lat + ',' + lon + '&z=' + zoom;
     },
@@ -1220,6 +1365,7 @@ const maps_raw = [
     category: UTILITY_CATEGORY,
     default_check: false,
     domain: "waze.com",
+    description: "Help to maintain the waze maps",
     getUrl(lat, lon, zoom) {
       return 'https://www.waze.com/editor?lon=' + lon + '&lat=' + lat + '&zoom=7';
     },
@@ -1252,6 +1398,7 @@ const maps_raw = [
     category: OTHER_CATEGORY,
     default_check: false,
     domain: "wikimapia.org",
+    description: "multilingual open-content collaborative map",
     getUrl(lat, lon, zoom) {
       return 'https://wikimapia.org/#lat=' + lat + '&lon=' + lon + '&z=' + zoom;
     },
@@ -1476,7 +1623,7 @@ const maps_raw = [
     category: UTILITY_CATEGORY,
     default_check: true,
     domain: "disaster.ninja",
-    description: "The most active OSM contributor",
+    description: "See most active OSM contributor",
     getUrl(lat, lon, zoom) {
       return 'https://disaster.ninja/live/#overlays=bivariate-custom_kontur_openstreetmap_quantity,osm-users;id=GDACS_TC_1000654_2;position=' + lon + ',' + lat + ';zoom=' + zoom;
     },
@@ -1491,10 +1638,10 @@ const maps_raw = [
   },
   {//https://www.maptiler.com/maps/#streets//vector/12.82/139.62724/35.44413
     name: "maptiler",
-    category: OTHER_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "maptiler.com",
-    description: "vextor map provider",
+    description: "vector maps",
     getUrl(lat, lon, zoom) {
       return 'https://www.maptiler.com/maps/#streets//vector/' + zoom + '/' + lon + '/' + lat;
     },
@@ -1511,7 +1658,7 @@ const maps_raw = [
     category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "gribrouillon.fr",
-    description: "Draw on a map and share it",
+    description: "Draw on map & share",
     getUrl(lat, lon, zoom) {
       return 'https://gribrouillon.fr/#' + zoom + '/' + lat + '/' + lon;
     },
@@ -1708,7 +1855,7 @@ const maps_raw = [
     category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "yelp.com",
-    description: "Local review",
+    description: "Local reviews",
     getUrl(lat, lon, zoom) {
       const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
       return 'https://www.yelp.com/search?l=g%3A' + maxlon + '%2C' + maxlat + '%2C' + minlon + '%2C' + minlat;
@@ -1720,7 +1867,7 @@ const maps_raw = [
     category: OTHER_CATEGORY,
     default_check: false,
     domain: "openseamap.org",
-    description: "",
+    description: "focus on nautical info",
     getUrl(lat, lon, zoom) {
       return 'http://map.openseamap.org/?zoom=' + Math.min(Number(zoom), 18) + '&lat=' + lat + '&lon=' + lon;
     },
@@ -1891,12 +2038,12 @@ const maps_raw = [
         }
       },
     },
-    { //https://trailrouter.com/#wps=35.68107,139.76553&ss=&rt=true&td=5000&aus=false&aus2=false&ah=0&ar=true&pga=0.8&im=false
+    { 
       name: "Trail Router",
       category: OTHER_CATEGORY,
       default_check: false,
       domain: "trailrouter.com",
-      description: "Green area routing",
+      description: "Quick Outdoor Roundtrips",
       getUrl(lat, lon, zoom) {
         return `https://trailrouter.com/#wps=${lat},${lon}&ss=&rt=true&td=5000&aus=false&aus2=false&ah=0&ar=true&pga=0.8&im=false`;
 
