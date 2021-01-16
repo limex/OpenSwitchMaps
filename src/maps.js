@@ -311,9 +311,9 @@ const maps_raw = [
       return 'https://en.mapy.cz/fotografie?x=' + lon + '&y=' + lat + '&z=' + zoom + '&l=0';
     },
     getLatLonZoom(url) {
-      const match = url.match(/en\.mapy\.cz\/fotografie\?x=(-?\d[0-9.]*)&y=(-?\d[0-9.]*)&z=(-?\d[0-9.]*)/);
+      const match = url.match(/en\.mapy\.cz\/fotografie\?x=(-?\d[0-9.]*)&y=(-?\d[0-9.]*)&z=(\d{1,2})/);
       if (match) {
-        const [, zoom, lat, lon] = match;
+        const [, lon, lat, zoom] = match;
         return [lat, lon, zoom];
       }
     },
@@ -1049,9 +1049,9 @@ const maps_raw = [
       return 'https://apps.sentinel-hub.com/eo-browser/?lat=' + lat + '&lng=' + lon + '&zoom=' + zoom;
     },
     getLatLonZoom(url) {
-      const match = url.match(/apps\.sentinel-hub\.com\/eo-browser\/\?lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
+      const match = url.match(/apps\.sentinel-hub\.com\/eo-browser\/\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)/);
       if (match) {
-        let [, lat, lon, zoom] = match;
+        let [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
       }
     },

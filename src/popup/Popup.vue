@@ -14,8 +14,14 @@
         @click.middle="openMapInCurrentTab(map)"
         @click.left="openMapInOtherTab(map)"
       >
-        <img :src="'http://www.google.com/s2/favicons?domain=' + map.domain">
-        {{ map.name }}
+        <label>
+          <div class="tooltip"> <img :src="'http://www.google.com/s2/favicons?domain=' + map.domain">
+            <span class="tooltiptext">{{ map.description }}&nbsp;</span>
+          </div>
+          <div class="tooltip"> {{ map.name }} 
+            <span class="tooltiptext">{{ map.description }}&nbsp;</span>
+          </div>
+        </label>
       </p>
     </div>
   </div>
@@ -129,4 +135,30 @@ module.exports = {
 	//flex-flow: 3 wrap;
 
   }
+
+    .tooltip {
+    display: inherit;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  /* width: 120px; */
+  background-color: rgba(0, 0, 0, 0.671);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 2px 2px;
+
+  /* Position the tooltip */
+  white-space:normal; 
+  width: 0px;
+  position: absolute;
+  z-index: 10;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  width: 100px;
+}
+
 </style>
