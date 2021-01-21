@@ -15,7 +15,7 @@
         @click.left="openMapInOtherTab(map)"
       >
         <label>
-          <div class="tooltip"> <img :src="'http://www.google.com/s2/favicons?domain=' + map.domain">
+          <div class="tooltip"> <img :src="'https://www.google.com/s2/favicons?domain=' + map.domain">
             <span class="tooltiptext">{{ map.description }}&nbsp;</span>
           </div>
           <div class="tooltip"> {{ map.name }} 

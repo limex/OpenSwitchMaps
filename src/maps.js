@@ -2092,6 +2092,24 @@ const maps_raw = [
         }
       },
     },
+    { //http://level0.osmz.ru/?url=map=18.74/47.040549/15.463744
+      name: "Level0 Editor",
+      category: UTILITY_CATEGORY,
+      default_check: true,
+      domain: "level0.osmz.ru",
+      description: "low-level OSM Editor",
+      getUrl(lat, lon, zoom) {
+        return `http://level0.osmz.ru/?url=map=${lon}/${lat}/${zoom}`;
+      },
+      getLatLonZoom(url) {
+        const match = url.match(/level0\.osmz\.ru\/\?url=map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+        if (match) {
+          const [, lon, lat, zoom] = match;
+          zoom = Math.round(zoom);
+          return [lat, normalizeLon(lon), Math.round(Number(zoom))];
+        }
+      },
+    }
 ];
 
 const maps = sortByKey(maps_raw,"name");

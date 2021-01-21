@@ -1,8 +1,8 @@
 {
   "name": "OpenSwitchMaps_limex",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Switch map services, and some useful links for OpenStreetMap contributors",
-  "homepage_url": "https://github.com/limex/OpenSwitchMap",
+  "homepage_url": "https://github.com/limex/OpenSwitchMaps",
   "permissions": ["activeTab", "tabs", "storage"],
   "background": {
     "scripts": ["background.js"]
@@ -22,7 +22,7 @@
   "manifest_version": 2,
   "browser_specific_settings": {
     "gecko": {
-      "id": "OpenSwitchMap@tankaru",
+      "id": "OpenSwitchMapLimex@limex67",
       "strict_min_version": "54.0"
     }
   }
