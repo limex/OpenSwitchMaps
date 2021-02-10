@@ -14,7 +14,7 @@ This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSw
 ## Install
 ### from Browser plugin
 + [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmapslimex/koidglegkmmddlpoigdfmblkjnfhibeb)
-+ [Firefox addon center](https://addons.mozilla.org/ja/firefox/addon/openswitchmapslimex/)
++ [Firefox addon center](https://addons.mozilla.org/firefox/addon/openswitchmaps_limex/)
 + Dialogs on *first* click take some seconds to show up.  Be patient. :)
 
 ### from source code
