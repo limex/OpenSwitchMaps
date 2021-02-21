@@ -13,9 +13,8 @@ This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSw
 
 ## Install
 ### from Browser plugin
-Currently not supported. This is the reference to the original project from tankaru with different features [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
-+ [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmaps/cfkddjlocfecchnemnnmmpdjcohgmkij)
-+ [Firefox addon center](https://addons.mozilla.org/ja/firefox/addon/openswitchmapslimex/)
++ [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmapslimex/koidglegkmmddlpoigdfmblkjnfhibeb)
++ [Firefox addon center](https://addons.mozilla.org/firefox/addon/openswitchmaps_limex/)
 + Dialogs on *first* click take some seconds to show up.  Be patient. :)
 
 ### from source code
