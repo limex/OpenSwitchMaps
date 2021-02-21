@@ -214,6 +214,25 @@ const maps_raw = [
     },
   },
   {
+    name: "Wikiloc",
+    category: OTHER_CATEGORY,
+    default_check: true,
+    domain: "wikiloc.com",
+    description: "Trail & Waypoint Community",
+    getUrl(lat, lon, zoom) {
+      const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
+      return 'https://www.wikiloc.com/wikiloc/map.do?sw=' + minlat + '%2C' + minlon + '&ne=' + maxlat + '%2C' + maxlon + '&page=1';
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/wikiloc\.com\/.*?sw=(-?\d[0-9.]+)%2C(-?\d[0-9.]+)&ne=(-?\d[0-9.]+)%2C(-?\d[0-9.]+)/);
+      if (match) {
+        let [, minlat, minlon, maxlat, maxlon] = match;
+        let [lat, lon, zoom] = bboxToLatLonZoom(minlon, minlat, maxlon, maxlat);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     name: "Waymarked Trails",
     category: OTHER_CATEGORY,
     default_check: true,
@@ -224,6 +243,23 @@ const maps_raw = [
     },
     getLatLonZoom(url) {
       const match = url.match(/waymarkedtrails\.org\/#.*\?map=(\d{1,2})!(-?\d[0-9.]*)!(-?\d[0-9.]*)/);
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "BRouter Web",
+    category: OTHER_CATEGORY,
+    default_check: true,
+    domain: "brouter.de",
+    description: "Powerfull Routing Engine",
+    getUrl(lat, lon, zoom) {
+      return 'http://brouter.de/brouter-web/#map=' + zoom + '/' + lat + '/' + lon + '/MtbMap';
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/brouter\.de\/.*#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
       if (match) {
         const [, zoom, lat, lon] = match;
         return [lat, lon, zoom];
@@ -541,9 +577,9 @@ const maps_raw = [
     category: PORTAL_CATEGORY,
     default_check: false,
     domain: "https://nakarte.me",
-    description: "Misc. Maps (Strava Heatmaps,...)",
+    description: "Heatmaps, Panorama, Streetview, ...",
     getUrl(lat, lon, zoom) {
-      return 'https://nakarte.me/#m=' + zoom + '/' + lat + '/' + lon + '&l=Czt/Sr';
+      return 'https://nakarte.me/#m=' + zoom + '/' + lat + '/' + lon + '&l=Czt/Sr&n2=_gwmc';
     },
     getLatLonZoom(url) {
       const match = url.match(/nakarte\.me\/#m=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
@@ -2031,9 +2067,9 @@ const maps_raw = [
 
       },
       getLatLonZoom(url) {
-        const match = url.match(/wwww\.lightningmaps\.org\/(.*)(-?\d[0-9.]*);x=(-?\d[0-9.]*);z=(\d[0-9.]*)/);
+        const match = url.match(/lightningmaps\.org\/.*;y=(-?\d[0-9.]*);x=(-?\d[0-9.]*);z=(\d[0-9.]*)/);
         if (match) {
-          const [, dummy, lon, lat, zoom] = match;
+          const [, lat, lon, zoom] = match;
           return [lat, normalizeLon(lon), Math.round(Number(zoom))];
         }
       },
