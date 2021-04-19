@@ -132,7 +132,7 @@ const maps_raw = [
   {
     name: "地理院地図",
     category: LOCAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "maps.gsi.go.jp",
     description: "Japanese official map",
     getUrl(lat, lon, zoom) {
@@ -183,7 +183,7 @@ const maps_raw = [
   {
     name: "Yandex",
     category: LOCAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "yandex.com",
     getUrl(lat, lon, zoom) {
       return 'https://yandex.com/maps/?ll=' + lon + '%2C' + lat + '&z=' + zoom;
@@ -199,7 +199,7 @@ const maps_raw = [
   {
     name: "Qwant Maps",
     category: LOCAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "qwant.com",
     description: "Vector map",
     getUrl(lat, lon, zoom) {
@@ -250,6 +250,45 @@ const maps_raw = [
     },
   },
   {
+    name: "Stellplatz.Info",
+    category: OTHER_CATEGORY,
+    default_check: true,
+    domain: "stellplatz.info",
+    description: "like Camping.info App",
+    getUrl(lat, lon, zoom) {
+      const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
+      return 'https://stellplatz.info/reisemobilstellplatz?map=' + minlat + ',' + minlon + ',' + maxlat + ',' + maxlon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/stellplatz\.info\/.*?map=(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)/);
+      if (match) {
+        let [, minlat, minlon, maxlat, maxlon] = match;
+        let [lat, lon, zoom] = bboxToLatLonZoom(minlon, minlat, maxlon, maxlat);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "Camping.Info",
+    category: OTHER_CATEGORY,
+    default_check: true,
+    domain: "stellplatz.info",
+    description: "like Stellplatz.info",
+    getUrl(lat, lon, zoom) {
+      const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
+      return 'https://www.camping.info/en/search-on-map?area=' + minlon + ',' + minlat + ',' + maxlon + ',' + maxlat;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/camping\.info\/.*?area=(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)&zl=(\d{1,2})/);
+      if (match) {
+        let [, minlon, minlat, maxlon, maxlat, zoom] = match;
+        let [lat, lon, dummy] = bboxToLatLonZoom(minlon, minlat, maxlon, maxlat);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+
+  {
     name: "BRouter Web",
     category: OTHER_CATEGORY,
     default_check: true,
@@ -269,7 +308,7 @@ const maps_raw = [
   { // https://umap.openstreetmap.fr/en/map/campermap_514529#15/47.4796122/15.7503233
     name: "CamperMap",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://umap.openstreetmap.fr",
     description: "Camper POIs",
     getUrl(lat, lon, zoom) {
@@ -286,7 +325,7 @@ const maps_raw = [
   { // https://opencampingmap.org/#15/47.4777/15.7536/0/0
     name: "OpenCampingMap",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://opencampingmap.org",
     description: "Camping Sites",
     getUrl(lat, lon, zoom) {
@@ -303,7 +342,7 @@ const maps_raw = [
   { // https://openskimap.org/#15.01/47.47717/15.75636
     name: "OpenSkiMap",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://openskimap.org",
     description: "Ski Slopes, Nordic Ski Trails",
     getUrl(lat, lon, zoom) {
@@ -340,7 +379,7 @@ const maps_raw = [
   { // https://en.mapy.cz/fotografie?x=15.7503858&y=47.4797360&z=15&l=0
     name: "Mapy.cz",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://en.mapy.cz",
     description: "Outdoor with geotagged Pics",
     getUrl(lat, lon, zoom) {
@@ -357,7 +396,7 @@ const maps_raw = [
   { // https://zoom.earth/#view=47.479649,15.750171,15z
     name: "Zoom Earth",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://zoom.earth",
     description: "Daily Sat Images",
     getUrl(lat, lon, zoom) {
@@ -374,7 +413,7 @@ const maps_raw = [
   {
     name: "mtbmap.cz",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "http://mtbmap.cz",
     description: "Mountain Bike Map",
     getUrl(lat, lon, zoom) {
@@ -391,7 +430,7 @@ const maps_raw = [
   {
     name: "XS Trails (XC)",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://www.xctrails.org",
     description: "Cross Country Skiing",
     getUrl(lat, lon, zoom) {
@@ -408,7 +447,7 @@ const maps_raw = [
   {
     name: "XS Trails (Climb)",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://www.xctrails.org",
     description: "Rock Climbing",
     getUrl(lat, lon, zoom) {
@@ -425,7 +464,7 @@ const maps_raw = [
   {
     name: "XS Trails (Ski)",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://www.xctrails.org",
     description: "Backcountry Ski Mountaineering",
     getUrl(lat, lon, zoom) {
@@ -452,7 +491,7 @@ const maps_raw = [
   {
     name: "Osmose",
     category: UTILITY_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "osmose.openstreetmap.fr",
     description: "OSM QA tool",
     getUrl(lat, lon, zoom) {
@@ -469,7 +508,7 @@ const maps_raw = [
   {
     name: "KeepRight",
     category: UTILITY_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "www.keepright.at",
     description: "OpenStreetMap QA tool",
     getUrl(lat, lon, zoom) {
@@ -487,7 +526,7 @@ const maps_raw = [
   {
     name: "OSM Inspector",
     category: UTILITY_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "tools.geofabrik.de",
     description: "OpenStreetMap QA tool",
     getUrl(lat, lon, zoom) {
@@ -558,7 +597,7 @@ const maps_raw = [
   {
     name: "map.orhyginal",
     category: PORTAL_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "orhyginal.fr",
     description: "Portal of many map services",
     getUrl(lat, lon, zoom) {
@@ -575,7 +614,7 @@ const maps_raw = [
   {
     name: "NaKarte",
     category: PORTAL_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://nakarte.me",
     description: "Heatmaps, Panorama, Streetview, ...",
     getUrl(lat, lon, zoom) {
@@ -592,7 +631,7 @@ const maps_raw = [
   {
     name: "Trailforks",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://www.trailforks.com",
     description: "Outdoor Sport Trails",
     getUrl(lat, lon, zoom) {
@@ -609,7 +648,7 @@ const maps_raw = [
   { // https://www.ventusky.com/?p=47.477;15.749;15&l=temperature-2m&t=20210110/12
     name: "Ventusky",
     category: SPECIAL_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "https://www.ventusky.com",
     description: "Weather, Wind, Snow, Waves, Rain, ...",
     getUrl(lat, lon, zoom) {
@@ -629,7 +668,7 @@ const maps_raw = [
     name: "Meteoblue Map",
     category: SPECIAL_CATEGORY,
     description: "7d Forecast, Maps Wind, Snow, Waves, Rain, ...",
-    default_check: false,
+    default_check: true,
     domain: "https://www.meteoblue.com",
     getUrl(lat, lon, zoom) {
       return 'https://www.meteoblue.com/en/weather/webmap/?mapcenter=' + lat + 'N' + lon + '&zoom=' + zoom;
@@ -648,7 +687,7 @@ const maps_raw = [
     name: "Meteoblue Multi",
     category: SPECIAL_CATEGORY,
     description: "Multi Model 7d Forecast",
-    default_check: false,
+    default_check: true,
     domain: "https://www.meteoblue.com",
     getUrl(lat, lon, zoom) {
       return 'https://www.meteoblue.com/en/weather/forecast/multimodel/' + lat + 'N' + lon + 'E';
@@ -664,10 +703,10 @@ const maps_raw = [
   { // https://www.windy.com/webcams/map?48.217,16.394,9
     // https://www.windy.com/webcams/map?48.217,16.394,9,i:pressure 
     // https://www.windy.com/-Webcams/Austria/Lower-Austria/Ollersbach/Nieder-%C3%96sterreich/webcams/1437829077?48.188,14.208,8,i:pressure
-    name: "webcam.travel",
+    name: "Windy",
     category: SPECIAL_CATEGORY,
     description: "WebCams on WeatherMap",
-    default_check: false,
+    default_check: true,
     domain: "https://www.windy.com",
     getUrl(lat, lon, zoom) {
       return 'https://www.windy.com/webcams/map?' + lat + ',' + lon + ',' + zoom;
@@ -684,7 +723,7 @@ const maps_raw = [
     name: "Bergfex",
     category: MAIN_CATEGORY,
     description: "Topo, Tracks, Tourism",
-    default_check: false,
+    default_check: true,
     domain: "https://www.bergfex.at",
     getUrl(lat, lon, zoom) {
       return 'https://www.bergfex.at/?mapstate=' + lat + ',' + lon + ',' + zoom + ',o,0,' + lat + ',' + lon;
@@ -701,7 +740,7 @@ const maps_raw = [
     name: "4umaps",
     category: MAIN_CATEGORY,
     description: "Topo, Trail difficulty",
-    default_check: false,
+    default_check: true,
     domain: "https://www.4umaps.com",
     getUrl(lat, lon, zoom) {
       return 'https://www.4umaps.com/map.htm?zoom=' + zoom + '&lat=' + lat + '&lon=' + lon + '&layers=B00';
@@ -717,7 +756,7 @@ const maps_raw = [
   {
     name: "Ingress Intel map",
     category: SPECIAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "intel.ingress.com",
     description: "Game Map",
     getUrl(lat, lon, zoom) {
@@ -734,7 +773,7 @@ const maps_raw = [
   {
     name: "BigMap 2 (Print)",
     category: UTILITY_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "osmz.ru",
     description: "Obtain a composed big map image",
     getUrl(lat, lon, zoom) {
@@ -765,12 +804,10 @@ const maps_raw = [
       }
     },
   },
-
-
   {
     name: "JapanMapCompare",
     category: LOCAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "mapcompare.jp",
     description: "Compare maps side-by-side",
     getUrl(lat, lon, zoom) {
@@ -937,7 +974,7 @@ const maps_raw = [
   {
     name: "Satellite Tracker 3D",
     category: SPECIAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "stdkmd.net",
     description: "Satellite tracker",
     getUrl(lat, lon, zoom) {
@@ -975,6 +1012,7 @@ const maps_raw = [
     category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "windy.com",
+    description: "Wind, Ocean, Chem, Particulates",
     getUrl(lat, lon, zoom) {
       return 'https://www.windy.com/?' + Number(lat).toFixed(3) + ',' + Number(lon).toFixed(3) + ',' + Math.round(zoom) + ',i:pressure';
     },
@@ -989,7 +1027,7 @@ const maps_raw = [
   {
     name: "flightradar24",
     category: SPECIAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "flightradar24.com",
     description: "Airplane tracker",
     getUrl(lat, lon, zoom) {
@@ -1006,7 +1044,7 @@ const maps_raw = [
   {
     name: "Traze",
     category: SPECIAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "traze.app",
     description: "Train tracker",
     getUrl(lat, lon, zoom) {
@@ -1019,13 +1057,11 @@ const maps_raw = [
         return [lat, lon, Math.round(zoom)];
       }
     },
-
   },
-
   {
     name: "MarineTraffic",
     category: SPECIAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "marinetraffic.com",
     description: "Ship tracker",
     getUrl(lat, lon, zoom) {
@@ -1039,12 +1075,11 @@ const maps_raw = [
       }
     },
   },
-
-
   {
     name: "CyclOSM",
     category: MAIN_CATEGORY,
     default_check: true,
+    description: "for Cyclists",
     domain: "cyclosm.org",
     getUrl(lat, lon, zoom) {
       return 'https://www.cyclosm.org/#map=' + zoom + '/' + lat + '/' + lon + '/cyclosm';
@@ -1114,7 +1149,7 @@ const maps_raw = [
   {
     name: "Old maps online",
     category: SPECIAL_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "oldmapsonline.org",
     getUrl(lat, lon, zoom) {
       const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
@@ -1145,7 +1180,7 @@ const maps_raw = [
   {
     name: "Wikimedia maps",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "wikimedia.org",
     getUrl(lat, lon, zoom) {
       return 'https://maps.wikimedia.org/#' + zoom + '/' + lat + '/' + lon;
@@ -1200,7 +1235,7 @@ const maps_raw = [
   {
     name: "openrouteservice",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "openrouteservice.org",
     getUrl(lat, lon, zoom) {
       return 'https://maps.openrouteservice.org/directions?n1=' + lat + '&n2=' + lon + '&n3=' + zoom;
@@ -1484,7 +1519,7 @@ const maps_raw = [
   {
     name: "Google Earth",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "earth.google.com",
     getUrl(lat, lon, zoom) {
       let d = Math.exp((zoom - 27) / (-1.44))
@@ -1503,7 +1538,7 @@ const maps_raw = [
   {
     name: "World Imagery Wayback",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "arcgis.com",
     description: "Historic satellite images since 2014",
     getUrl(lat, lon, zoom) {
@@ -1567,7 +1602,7 @@ const maps_raw = [
   {
     name: "flickr",
     category: SPECIAL_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "flickr.com",
     description: "Geotagged image search",
     getUrl(lat, lon, zoom) {
@@ -1623,7 +1658,7 @@ const maps_raw = [
   {//https://www.openstreetbrowser.org/#map=16/35.3512/139.5310
     name: "OpenStreetBrowser",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "openstreetbrowser.org",
     description: "OSM POI viewer",
     getUrl(lat, lon, zoom) {
@@ -1657,7 +1692,7 @@ const maps_raw = [
   {
     name: "Kontur",
     category: UTILITY_CATEGORY,
-    default_check: true,
+    default_check: false,
     domain: "disaster.ninja",
     description: "See most active OSM contributor",
     getUrl(lat, lon, zoom) {
@@ -1726,7 +1761,7 @@ const maps_raw = [
   {//https://www.peakfinder.org/?lat=46.6052&lng=8.3217&azi=0&zoom=4&ele=1648
     name: "PeakFinder",
     category: OTHER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "peakfinder.org",
     description: "Mountain landscape view map",
     getUrl(lat, lon, zoom) {
@@ -1804,7 +1839,7 @@ const maps_raw = [
   {//http://www.opensnowmap.org/?zoom=17&lat=43.08561&lon=141.33047
     name: "OpenSnowMap",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "opensnowmap.org",
     description: "Winter sports map",
     getUrl(lat, lon, zoom) {
@@ -1821,7 +1856,7 @@ const maps_raw = [
   {//http://www.opencyclemap.org/?zoom=17&lat=43.08561&lon=141.33047
     name: "OpenCycleMap",
     category: MAIN_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "opencyclemap.org",
     description: "Cycling map",
     getUrl(lat, lon, zoom) {
@@ -2077,7 +2112,7 @@ const maps_raw = [
     { 
       name: "Trail Router",
       category: OTHER_CATEGORY,
-      default_check: false,
+      default_check: true,
       domain: "trailrouter.com",
       description: "Quick Outdoor Roundtrips",
       getUrl(lat, lon, zoom) {
@@ -2131,7 +2166,7 @@ const maps_raw = [
     { //http://level0.osmz.ru/?url=map=18.74/47.040549/15.463744
       name: "Level0 Editor",
       category: UTILITY_CATEGORY,
-      default_check: true,
+      default_check: false,
       domain: "level0.osmz.ru",
       description: "low-level OSM Editor",
       getUrl(lat, lon, zoom) {
