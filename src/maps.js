@@ -165,7 +165,7 @@ const maps_raw = [
   },
   {
     name: "F4map",
-    category: MAIN_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "f4map.com",
     description: "Dynamic 3D map",
@@ -251,7 +251,7 @@ const maps_raw = [
   },
   {
     name: "Stellplatz.Info",
-    category: OTHER_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "stellplatz.info",
     description: "like Camping.info App",
@@ -270,9 +270,9 @@ const maps_raw = [
   },
   {
     name: "Camping.Info",
-    category: OTHER_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: true,
-    domain: "stellplatz.info",
+    domain: "camping.info",
     description: "like Stellplatz.info",
     getUrl(lat, lon, zoom) {
       const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
@@ -307,7 +307,7 @@ const maps_raw = [
   },
   { // https://umap.openstreetmap.fr/en/map/campermap_514529#15/47.4796122/15.7503233
     name: "CamperMap",
-    category: MAIN_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "https://umap.openstreetmap.fr",
     description: "Camper POIs",
@@ -324,7 +324,7 @@ const maps_raw = [
   },
   { // https://opencampingmap.org/#15/47.4777/15.7536/0/0
     name: "OpenCampingMap",
-    category: MAIN_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: true,
     domain: "https://opencampingmap.org",
     description: "Camping Sites",
@@ -375,6 +375,27 @@ const maps_raw = [
       }
     },
   },
+
+  { // https://www.komoot.com/plan/@47.9126603,16.4678192,10z
+    name: "Park4night",
+    category: SPECIAL_CATEGORY,
+    default_check: true,
+    domain: "park4night.com",
+    description: "Discover Overnight Parking",
+    getUrl(lat, lon, zoom) {
+      zoom = Math.round(zoom);
+      return 'https://www.park4night.com/carte_lieux?lat=' + lat + '&lng=' + lon + '&zoom=' + zoom;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/park4night\.com\/.*?lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&zoom=(\d{1,2})/);
+      if (match) {
+        const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+
+
 
   { // https://en.mapy.cz/fotografie?x=15.7503858&y=47.4797360&z=15&l=0
     name: "Mapy.cz",
