@@ -164,6 +164,23 @@ const maps_raw = [
     },
   },
   {
+    name: "OutdoorActive",
+    category: OTHER_CATEGORY,
+    default_check: true,
+    domain: "outdooractive.com",
+    description: "Tours for multiple Sports",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.outdooractive.com/en/map/#bm=osm%3Asummer&fu=1&zc=' + zoom + ',' + lon + ',' + lat;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/outdooractive\.com\/.*?zc=(\d{1,2}),(-?\d[0-9.]*),(-?\d[0-9.]*)/);
+      if (match) {
+        let [, zoom, lon, lat] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     name: "F4map",
     category: SPECIAL_CATEGORY,
     default_check: true,
@@ -264,6 +281,23 @@ const maps_raw = [
       if (match) {
         let [, minlat, minlon, maxlat, maxlon] = match;
         let [lat, lon, zoom] = bboxToLatLonZoom(minlon, minlat, maxlon, maxlat);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "DualMaps",
+    category: MAIN_CATEGORY,
+    default_check: true,
+    domain: "mapchannels.com",
+    description: "synchronized Maps, Aerial & Street View",
+    getUrl(lat, lon, zoom) {
+      return 'https://www.mapchannels.com/dualmaps7/map.htm?lat=' + lat + '&lng=' + lon + '&z=' + zoom + '&slat=' + lat + '&slng=' + lon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(/mapchannels\.com\/.*?lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&z=(\d{1,2})&slat=(-?\d[0-9.]*)&slng=(-?\d[0-9.]*)/);
+      if (match) {
+        let [, lat, lon, zoom] = match;
         return [lat, lon, zoom];
       }
     },
