@@ -1,11 +1,7 @@
 <template>
   <div id="mapmenu">
     <span class="options-link" @click="openOptionsPage">⚙</span>
-    <div
-      v-for="(maps, columnName) in columns"
-      :key="columnName"
-      class="column"
-    >
+    <div v-for="(maps, columnName) in columns" :key="columnName" class="column">
       <p class="title">{{ columnName }}</p>
       <p
         v-for="map in maps"
@@ -15,10 +11,14 @@
         @click.left="openMapInOtherTab(map)"
       >
         <label>
-          <div class="tooltip"> <img :src="'https://www.google.com/s2/favicons?domain=' + map.domain">
+          <div class="tooltip">
+            <img
+              :src="'https://www.google.com/s2/favicons?domain=' + map.domain"
+            />
             <span class="tooltiptext">{{ map.description }}&nbsp;</span>
           </div>
-          <div class="tooltip"> {{ map.name }} 
+          <div class="tooltip">
+            {{ map.name }}
             <span class="tooltiptext">{{ map.description }}&nbsp;</span>
           </div>
         </label>
@@ -27,38 +27,49 @@
   </div>
 </template>
 <script>
-const _ = require('lodash');
+const _ = require("lodash");
 const browser = require("webextension-polyfill");
-const {getLatLonZoom, getAllMaps} = require('../maps');
-const storage = require('../options/storage');
-
+const { getLatLonZoom, getAllMaps } = require("../maps");
+const storage = require("../options/storage");
 
 module.exports = {
   computed: {
     columns() {
-      const enabledMaps = _.filter(getAllMaps(), map => storage.observableEnabledMaps[map.name]);
-      return _.groupBy(enabledMaps, 'category');
+      const enabledMaps = _.filter(
+        getAllMaps(),
+        (map) => storage.observableEnabledMaps[map.name]
+      );
+      return _.groupBy(enabledMaps, "category");
     },
   },
   methods: {
     openMapInCurrentTab(map) {
-      this.open(map, mapUrl => 'window.location.href =' + JSON.stringify(mapUrl) + ';');
+      this.open(
+        map,
+        (mapUrl) => "window.location.href =" + JSON.stringify(mapUrl) + ";"
+      );
     },
     openMapInOtherTab(map) {
-      this.open(map, mapUrl => 'window.open(' + JSON.stringify(mapUrl) + ');');
+      this.open(
+        map,
+        (mapUrl) => "window.open(" + JSON.stringify(mapUrl) + ");"
+      );
     },
     open(map, getCode) {
-      chrome.tabs.query({
-        active: true,
-        currentWindow: true
-      }, function(tabs) {
-        const tab = tabs[0];
-        const [lat, lon, zoom] = getLatLonZoom(tab.url);
-        const mapUrl = map.getUrl(lat, lon, zoom);
-        const code = getCode(mapUrl);
-        chrome.tabs.executeScript(tab.id, {code});
-        window.close();
-      });
+      chrome.tabs.query(
+        {
+          active: true,
+          currentWindow: true,
+        },
+        function(tabs) {
+          const tab = tabs[0];
+          const [lat, lon, zoom] = getLatLonZoom(tab.url);
+          const mapUrl = map.getUrl(lat, lon, zoom);
+          const code = getCode(mapUrl);
+          chrome.tabs.executeScript(tab.id, { code });
+          window.close();
+        }
+      );
     },
     openOptionsPage() {
       browser.runtime.openOptionsPage();
@@ -67,77 +78,77 @@ module.exports = {
 };
 </script>
 <style>
-  body {
-    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 10pt;
-    display: table;
-    padding: 0;
-    margin: 0;
-  }
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 10pt;
+  display: table;
+  padding: 0;
+  margin: 0;
+}
 
-  p.map {
-    padding: 5px;
-    margin: 5px;
-  }
+p.map {
+  padding: 5px;
+  margin: 5px;
+}
 
-  p.map img {
-    vertical-align: text-bottom;
-    margin-right: 5px;
-  }
+p.map img {
+  vertical-align: text-bottom;
+  margin-right: 5px;
+}
 
-  p.map:hover {
-    cursor: pointer;
-    background-color: #eee;
-  }
+p.map:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
 
-  .title, .options-link {
-    background-color: #eee;
-    font-weight: bold;
-    font-size: larger;
-    text-align: center;
-    padding: 5px;
-    margin: 0;
-  }
+.title,
+.options-link {
+  background-color: #eee;
+  font-weight: bold;
+  font-size: larger;
+  text-align: center;
+  padding: 5px;
+  margin: 0;
+}
 
-  .column:last-child .title {
-    margin-right: 1ex;
-  }
+.column:last-child .title {
+  margin-right: 1ex;
+}
 
-  .options-link {
-    position: fixed;
-    top: 0;
-    right: 0;
-    text-decoration: none;
-  }
+.options-link {
+  position: fixed;
+  top: 0;
+  right: 0;
+  text-decoration: none;
+}
 
-  .options-link:hover {
-    cursor: pointer;
-  }
+.options-link:hover {
+  cursor: pointer;
+}
 
-  .column {
-    display: inline-block;
-	vertical-align: top;
-    white-space: nowrap;
-	width: 150px;
-	//float:left;
-	//clear:both;
-	overflow: hidden;
-  }
-  
-  #mapmenu {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	//width: 450px;
-	//column-count: 3;
-  	//display:flex;
-	//flex-direction: row;
-	//flex-wrap: wrap;
-	//flex-flow: 3 wrap;
+.column {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 150px;
+  //float:left;
+  //clear:both;
+  overflow: hidden;
+}
 
-  }
+#mapmenu {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  //width: 450px;
+  //column-count: 3;
+  //display:flex;
+  //flex-direction: row;
+  //flex-wrap: wrap;
+  //flex-flow: 3 wrap;
+}
 
-    .tooltip {
-    display: inherit;
+.tooltip {
+  display: inherit;
 }
 
 .tooltip .tooltiptext {
@@ -150,7 +161,7 @@ module.exports = {
   padding: 2px 2px;
 
   /* Position the tooltip */
-  white-space:normal; 
+  white-space: normal;
   width: 0px;
   position: absolute;
   z-index: 10;
@@ -160,5 +171,4 @@ module.exports = {
   visibility: visible;
   width: 100px;
 }
-
 </style>
