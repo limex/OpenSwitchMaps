@@ -200,6 +200,33 @@ const maps_raw = [
     },
   },
   {
+    name: "Freemap.sk",
+    category: MAIN_CATEGORY,
+    default_check: true,
+    domain: "freemap.sk",
+    description: "Map and Features for Sk",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.freemap.sk/?map=" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon +
+        "&layers=X"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /freemap\.sk\/.*?map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     name: "F4map",
     category: SPECIAL_CATEGORY,
     default_check: true,
@@ -1422,7 +1449,7 @@ const maps_raw = [
   },
   {
     name: "Open Infrastructure",
-    category: OTHER_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "openinframap.org",
     description: "World's hidden infrastructure (Train, Power, Mobile, ...)",
@@ -2061,13 +2088,13 @@ const maps_raw = [
   {
     // https://www.opensnowmap.org/?zoom=15&lat=47.03757&lon=15.4687334#map=15/15.353/47.055&b=snowmap&m=false&h=false
     name: "OpenSnowMap",
-    category: OTHER_CATEGORY,
+    category: SPECIAL_CATEGORY,
     default_check: false,
     domain: "opensnowmap.org",
     description: "Winter sports map",
     getUrl(lat, lon, zoom) {
       return (
-        "http://www.opensnowmap.org/?zoom=" +
+        "https://www.opensnowmap.org/?zoom=" +
         zoom +
         "&lat=" +
         lat +
@@ -2081,6 +2108,14 @@ const maps_raw = [
         lat +
         "&b=snowmap&m=false&h=false"
       );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /opensnowmap\.org\/.*#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lon, lat] = match;
+      }
     },
   },
   {
