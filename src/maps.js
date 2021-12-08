@@ -2059,10 +2059,10 @@ const maps_raw = [
     },
   },
   {
-    //http://www.opensnowmap.org/?zoom=17&lat=43.08561&lon=141.33047
+    // https://www.opensnowmap.org/?zoom=15&lat=47.03757&lon=15.4687334#map=15/15.353/47.055&b=snowmap&m=false&h=false
     name: "OpenSnowMap",
-    category: MAIN_CATEGORY,
-    default_check: true,
+    category: OTHER_CATEGORY,
+    default_check: false,
     domain: "opensnowmap.org",
     description: "Winter sports map",
     getUrl(lat, lon, zoom) {
@@ -2072,17 +2072,15 @@ const maps_raw = [
         "&lat=" +
         lat +
         "&lon=" +
-        lon
+        lon +
+        "#map=" +
+        zoom +
+        "/" +
+        lon +
+        "/" +
+        lat +
+        "&b=snowmap&m=false&h=false"
       );
-    },
-    getLatLonZoom(url) {
-      const match = url.match(
-        /opensnowmap\.org.*\?zoom=(\d{1,2})&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)/
-      );
-      if (match) {
-        let [, zoom, lat, lon] = match;
-        return [lat, lon, zoom];
-      }
     },
   },
   {
