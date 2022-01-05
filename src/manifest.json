@@ -1,6 +1,6 @@
 {
   "name": "OpenSwitchMaps_limex",
-  "version": "1.4.13",
+  "version": "1.4.16",
   "description": "Switch map services and Tools for OpenStreetMap contributors",
   "homepage_url": "https://github.com/limex/OpenSwitchMaps",
   "permissions": [
@@ -25,11 +25,5 @@
   "options_ui": {
     "page": "options.html"
   },
-  "manifest_version": 2,
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "OpenSwitchMapLimex@limex67",
-      "strict_min_version": "54.0"
-    }
-  }
+  "manifest_version": 2
 }

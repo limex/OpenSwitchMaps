@@ -54,7 +54,7 @@ const SPECIAL_CATEGORY = "Specials";
 const PORTAL_CATEGORY = "Map portal";
 
 function sortByKey(array, key) {
-  return array.sort(function(a, b) {
+  return array.sort(function (a, b) {
     var x = a[key];
     var y = b[key];
     if (typeof x == "string") {
@@ -72,7 +72,7 @@ const maps_raw = [
     name: "Google Maps",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "www.google.com",
+    domain: "google.com",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.google.com/maps/@" + lat + "," + lon + "," + zoom + "z"
@@ -110,7 +110,7 @@ const maps_raw = [
     name: "OpenStreetMap",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "www.openstreetmap.org",
+    domain: "openstreetmap.org",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.openstreetmap.org/#map=" + zoom + "/" + lat + "/" + lon
@@ -130,7 +130,7 @@ const maps_raw = [
     name: "Mapillary",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "www.mapillary.com",
+    domain: "mapillary.com",
     description: "Crowdsourced street-level imagery available as CC BY-SA",
     getUrl(lat, lon, zoom) {
       return (
@@ -296,10 +296,11 @@ const maps_raw = [
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /waymarkedtrails\.org\/#.*\?map=(\d{1,2})!(-?\d[0-9.]*)!(-?\d[0-9.]*)/
+        /waymarkedtrails\.org\/#.*\?map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
-        const [, zoom, lat, lon] = match;
+        let [, zoom, lat, lon] = match;
+        zoom = Math.round(zoom);
         return [lat, lon, zoom];
       }
     },
@@ -432,7 +433,7 @@ const maps_raw = [
     name: "CamperMap",
     category: SPECIAL_CATEGORY,
     default_check: true,
-    domain: "https://umap.openstreetmap.fr",
+    domain: "umap.openstreetmap.fr",
     description: "Camper POIs",
     getUrl(lat, lon, zoom) {
       return (
@@ -459,7 +460,7 @@ const maps_raw = [
     name: "OpenCampingMap",
     category: SPECIAL_CATEGORY,
     default_check: true,
-    domain: "https://opencampingmap.org",
+    domain: "opencampingmap.org",
     description: "Camping Sites",
     getUrl(lat, lon, zoom) {
       return "https://opencampingmap.org/#" + zoom + "/" + lat + "/" + lon;
@@ -479,17 +480,17 @@ const maps_raw = [
     name: "OpenSkiMap",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "https://openskimap.org",
+    domain: "openskimap.org",
     description: "Ski Slopes, Nordic Ski Trails",
     getUrl(lat, lon, zoom) {
       return "https://openskimap.org/#" + zoom + "/" + lat + "/" + lon;
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /openskimap\.org\/#(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+        /openskimap\.org\/.*#(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
-        const [, zoom, lat, lon] = match;
+        let [, zoom, lat, lon] = match;
         zoom = Math.round(zoom);
         return [lat, lon, zoom];
       }
@@ -500,7 +501,7 @@ const maps_raw = [
     name: "Komoot",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "https://www.komoot.com",
+    domain: "komoot.com",
     description: "Discover & Plan for multiple Sports",
     getUrl(lat, lon, zoom) {
       zoom = Math.round(zoom);
@@ -551,7 +552,7 @@ const maps_raw = [
     name: "Mapy.cz",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "https://en.mapy.cz",
+    domain: "mapy.cz",
     description: "Outdoor with geotagged Pics",
     getUrl(lat, lon, zoom) {
       return (
@@ -579,7 +580,7 @@ const maps_raw = [
     name: "Zoom Earth",
     category: OTHER_CATEGORY,
     default_check: true,
-    domain: "https://zoom.earth",
+    domain: "zoom.earth",
     description: "Daily Sat Images",
     getUrl(lat, lon, zoom) {
       return "https://zoom.earth/#view=" + lat + "," + lon + "," + zoom + "z";
@@ -598,7 +599,7 @@ const maps_raw = [
     name: "mtbmap.cz",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "http://mtbmap.cz",
+    domain: "mtbmap.cz",
     description: "Mountain Bike Map",
     getUrl(lat, lon, zoom) {
       return "http://mtbmap.cz/#zoom=" + zoom + "&lat=" + lat + "&lon=" + lon;
@@ -617,7 +618,7 @@ const maps_raw = [
     name: "XS Trails (XC)",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "https://www.xctrails.org",
+    domain: "xctrails.org",
     description: "Cross Country Skiing",
     getUrl(lat, lon, zoom) {
       return (
@@ -644,7 +645,7 @@ const maps_raw = [
     name: "XS Trails (Climb)",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "https://www.xctrails.org",
+    domain: "xctrails.org",
     description: "Rock Climbing",
     getUrl(lat, lon, zoom) {
       return (
@@ -671,7 +672,7 @@ const maps_raw = [
     name: "XS Trails (Ski)",
     category: MAIN_CATEGORY,
     default_check: true,
-    domain: "https://www.xctrails.org",
+    domain: "xctrails.org",
     description: "Backcountry Ski Mountaineering",
     getUrl(lat, lon, zoom) {
       return (
@@ -734,7 +735,7 @@ const maps_raw = [
     name: "KeepRight",
     category: UTILITY_CATEGORY,
     default_check: false,
-    domain: "www.keepright.at",
+    domain: "keepright.at",
     description: "OpenStreetMap QA tool",
     getUrl(lat, lon, zoom) {
       if (Number(zoom) > 18) zoom = 18;
@@ -880,7 +881,7 @@ const maps_raw = [
     name: "NaKarte",
     category: PORTAL_CATEGORY,
     default_check: true,
-    domain: "https://nakarte.me",
+    domain: "nakarte.me",
     description: "Heatmaps, Panorama, Streetview, ...",
     getUrl(lat, lon, zoom) {
       return (
@@ -907,7 +908,7 @@ const maps_raw = [
     name: "Trailforks",
     category: OTHER_CATEGORY,
     default_check: true,
-    domain: "https://www.trailforks.com",
+    domain: "trailforks.com",
     description: "Outdoor Sport Trails",
     getUrl(lat, lon, zoom) {
       return (
@@ -934,7 +935,7 @@ const maps_raw = [
     name: "Ventusky",
     category: SPECIAL_CATEGORY,
     default_check: true,
-    domain: "https://www.ventusky.com",
+    domain: "ventusky.com",
     description: "Weather, Wind, Snow, Waves, Rain, ...",
     getUrl(lat, lon, zoom) {
       // return 'https://www.ventusky.com/?p=' + lat + ';' + lon + ';' + zoom;
@@ -957,7 +958,7 @@ const maps_raw = [
     category: SPECIAL_CATEGORY,
     description: "7d Forecast, Maps Wind, Snow, Waves, Rain, ...",
     default_check: true,
-    domain: "https://www.meteoblue.com",
+    domain: "meteoblue.com",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.meteoblue.com/en/weather/webmap/?mapcenter=" +
@@ -983,7 +984,7 @@ const maps_raw = [
     category: SPECIAL_CATEGORY,
     description: "Multi Model 7d Forecast",
     default_check: true,
-    domain: "https://www.meteoblue.com",
+    domain: "meteoblue.com",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.meteoblue.com/en/weather/forecast/multimodel/" +
@@ -1008,7 +1009,7 @@ const maps_raw = [
     category: SPECIAL_CATEGORY,
     description: "WebCams on WeatherMap",
     default_check: true,
-    domain: "https://www.windy.com",
+    domain: "windy.com",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.windy.com/webcams/map?" + lat + "," + lon + "," + zoom
@@ -1029,7 +1030,7 @@ const maps_raw = [
     category: MAIN_CATEGORY,
     description: "Topo, Tracks, Tourism",
     default_check: true,
-    domain: "https://www.bergfex.at",
+    domain: "bergfex.at",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.bergfex.at/?mapstate=" +
@@ -1060,7 +1061,7 @@ const maps_raw = [
     category: MAIN_CATEGORY,
     description: "Topo, Trail difficulty",
     default_check: true,
-    domain: "https://www.4umaps.com",
+    domain: "4umaps.com",
     getUrl(lat, lon, zoom) {
       return (
         "https://www.4umaps.com/map.htm?zoom=" +
@@ -2401,7 +2402,7 @@ const maps_raw = [
         /level0\.osmz\.ru\/\?url=map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
-        const [, lon, lat, zoom] = match;
+        let [, lon, lat, zoom] = match;
         zoom = Math.round(zoom);
         return [lat, normalizeLon(lon), Math.round(Number(zoom))];
       }

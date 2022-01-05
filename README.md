@@ -1,32 +1,45 @@
 # OpenSwitchMaps
+
 Map service switcher for Chrome/Firefox extension
 Greatly contributed by jazzzz.
-This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!!  Thanks! A very good foundation for my fork!
+This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!! Thanks! A very good foundation for my fork!
 
 ## Motivation for clone (New Features & Fixes)
-+ Some cleanup done. Added new maps
-+ Most of the maps didn't calculate the lat/lon/zoom calculation that is needed to open a new map from.
-+ Chanced the Categories, because some grew to big, while others remained small.
-+ Switched behavour in the Map Popup: Left Click now opens in new Tab, Middle Click opens in same Tab
-+ Sorted the Maps by Name
-+ Show Descriptions while MouseOver in Options Popup
+
+- Some cleanup done. Added new maps
+- Most of the maps didn't calculate the lat/lon/zoom calculation that is needed to open a new map from.
+- Chanced the Categories, because some grew to big, while others remained small.
+- Switched behavour in the Map Popup: Left Click now opens in new Tab, Middle Click opens in same Tab
+- Sorted the Maps by Name
+- Show Descriptions while MouseOver in Options Popup
 
 ## Install
+
 ### from Browser plugin
-+ [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmapslimex/koidglegkmmddlpoigdfmblkjnfhibeb)
-+ [Firefox addon center](https://addons.mozilla.org/firefox/addon/openswitchmaps_limex/)
-+ Dialogs on *first* click take some seconds to show up.  Be patient. :)
+
+- [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmapslimex/koidglegkmmddlpoigdfmblkjnfhibeb)
+- [Firefox addon center](https://addons.mozilla.org/firefox/addon/openswitchmaps_limex/)
+- Dialogs on _first_ click take some seconds to show up. Be patient. :)
 
 ### from source code
+
 This extention uses Node.js
+
 1. Install Node.js
 1. Install the dependencies: npm install
 1. Build the extension: npm run build
 1. The extension is built in the `dist` directory
-1. Add to your Chrome/Firefox 
-	+ Chrome: chrome://extensions/ -> Load unpacked 
+1. Add to your Chrome/Firefox
+   - Chrome: chrome://extensions/ -> Load unpacked
+1. Optional:
+
+   Increase the build version in Powershell (if needed):
+
+   - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+   - .\inc_patch.ps1
 
 ## How to use
+
 1. Open Google map, for example
 1. You will see a green earth icon near URL bar. Click it.
 1. Select OpenStreetMap, for example.
@@ -34,16 +47,20 @@ This extention uses Node.js
 1. Left click: Open in a new tab. Middle click: Open the same tab.
 
 ## Settings
+
 Show/hide maps:
+
 1. Right click the earth icon,
 1. Select "Options"
 1. It might take some seconds for the popup to apear. Collecting all the data takes some time.
 1. Check/uncheck each map to show/hide it.
 
 ## ToDo
-+ ??
+
+- ??
 
 ## Screenshots
+
 Chrome
 This is the reference to the original project from tankaru with different features [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
 ![Screenshot of Chrome](Screenshot-chrome.jpg)
@@ -54,21 +71,21 @@ This is the reference to the original project from tankaru with different featur
 ![Screenshot of Firefox](Screenshot-firefox.jpg)
 
 ## Example video
+
 This is the reference to the original project from tankaru with different features [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
 [![Example](http://img.youtube.com/vi/tO87xkc7VaI/0.jpg)](http://www.youtube.com/watch?v=tO87xkc7VaI)
 
 ## Similar softwares
 
-* [MapJumper Plus](https://chrome.google.com/webstore/detail/mapjumper-plus/mdhfopoodheacfapdohpmjndgnfmdecj), by Tomas Kafka
-* [Maps URL Converter](https://chrome.google.com/webstore/detail/maps-url-converter/ehnoijojkgigcmlimlndncbdfcmmlgmi), by lamphanviet.com
-* [Mapswitch](https://chrome.google.com/webstore/detail/mapswitch/ineobcbceekmckhjifhdmglkhgngnhmd), by evgeny.ger
-* [Map Switcher](https://chrome.google.com/webstore/detail/map-switcher/fanpjcbgdinjeknjikpfnldfpnnpkelb), by david.r.edgar
-* [Map Helper](https://chrome.google.com/webstore/detail/map-helper/ihllleemlchjegcfnaglokgamafhafda), by petrovnn
-* [MapSwitcher](https://addons.mozilla.org/ja/firefox/addon/map-switcher/), by František Nesveda
-
-
+- [MapJumper Plus](https://chrome.google.com/webstore/detail/mapjumper-plus/mdhfopoodheacfapdohpmjndgnfmdecj), by Tomas Kafka
+- [Maps URL Converter](https://chrome.google.com/webstore/detail/maps-url-converter/ehnoijojkgigcmlimlndncbdfcmmlgmi), by lamphanviet.com
+- [Mapswitch](https://chrome.google.com/webstore/detail/mapswitch/ineobcbceekmckhjifhdmglkhgngnhmd), by evgeny.ger
+- [Map Switcher](https://chrome.google.com/webstore/detail/map-switcher/fanpjcbgdinjeknjikpfnldfpnnpkelb), by david.r.edgar
+- [Map Helper](https://chrome.google.com/webstore/detail/map-helper/ihllleemlchjegcfnaglokgamafhafda), by petrovnn
+- [MapSwitcher](https://addons.mozilla.org/ja/firefox/addon/map-switcher/), by František Nesveda
 
 ## Current (2021/01/16) supported map services
+
 1. 2gis(RU): Russia and some Europe map
 1. 4umaps: Topo, Trail difficulty
 1. Apple maps: only on Apple devices
@@ -185,17 +202,18 @@ This is the reference to the original project from tankaru with different featur
 1. 今昔マップ(JP): Historic map compare in Japan
 1. 地形図・地勢図図歴(JP): Historic topo map in Japan
 1. 地理院地図: Japanese official map
-1. 地質図Navi (JP): Geological map in Japan
+1. 地質図 Navi (JP): Geological map in Japan
 1. 聖地巡礼マップ: Anime location search
 1. 重ねるハザードマップ(JP): Hazard map in Japan
 
 ## Japanese descriptions
+
 This is the reference to the original project from tankaru with different features [tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps):
-OpenStreetMapを中心に地図サービスを切り替えることができるChrome拡張機能です。
-特にMapillary⇔OSM⇔Googleマップの切り替えが便利かと思います。
+OpenStreetMap を中心に地図サービスを切り替えることができる Chrome 拡張機能です。
+特に Mapillary⇔OSM⇔Google マップの切り替えが便利かと思います。
 
 アイコンは [ICOOON MONO](http://icooon-mono.com/) から使用させていただきました。
 
-説明用のスクリーンショット静止画にはOpenStreetMap((c)OpenStreetMap Contributors)を使用しています。
+説明用のスクリーンショット静止画には OpenStreetMap((c)OpenStreetMap Contributors)を使用しています。
 
 説明用のスクリーンキャプチャ動画には、OpenStreetMap(by OpenStreetMap Contributors), Mapillary(by Mapillary), F4map(by F4), KeepRight(by Harald Kleiner), Ingress Intel Map(by Niantic, Google)を使用しています。
