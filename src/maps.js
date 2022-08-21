@@ -2408,6 +2408,24 @@ const maps_raw = [
       }
     },
   },
+  {
+		//https://osmand.net/map#11/35.6492/139.8395
+		name: "OsmAnd",
+		category: MAIN_CATEGORY,
+		default_check: true,
+		domain: "osmand.net",
+		description: "",
+		getUrl(lat, lon, zoom) {
+			return `https://osmand.net/map#${zoom}/${lat}/${lon}`;
+		},
+		getLatLonZoom(url) {
+			const match = url.match(/osmand\.net\/map#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+			if (match) {
+				const [, zoom, lat, lon] = match;
+				return [lat, normalizeLon(lon), Math.round(Number(zoom))];
+			}
+		},
+	},
 ];
 
 const maps = sortByKey(maps_raw, "name");

@@ -18,7 +18,7 @@ function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
 
 $manifest = Get-Content '.\src\manifest.json' -raw | ConvertFrom-Json
 $package = Get-Content '.\package.json' -raw | ConvertFrom-Json
-$packagelock = Get-Content '.\package-lock.json' -raw | ConvertFrom-Json
+# $packagelock = Get-Content '.\package-lock.json' -raw | ConvertFrom-Json
 
 $oldManifestVersion = $manifest.version
 $manifestVersionArray = $oldManifestVersion.Split(".")
@@ -30,5 +30,5 @@ $manifest.update | % { $manifest.version = $newManifestVersion }
 $manifest | ConvertTo-Json | Format-Json | set-content '.\src\manifest.json'
 $package.update | % { $package.version = $newManifestVersion }
 $package | ConvertTo-Json | Format-Json | set-content '.\package.json'
-$packagelock.update | % { $packagelock.version = $newManifestVersion }
-$packagelock | ConvertTo-Json | Format-Json | set-content '.\package-lock.json'
+# $packagelock.update | % { $packagelock.version = $newManifestVersion }
+# $packagelock | ConvertTo-Json | Format-Json | set-content '.\package-lock.json'
