@@ -1,16 +1,16 @@
 <template>
   <div id="mapmenu">
     <span class="options-link" @click="openOptionsPage">⚙</span>
-    <div v-for="(maps, columnName) in columns" :key="columnName" class="column">
+    <div v-for="(maps, columnName) in columns" :key="columnName" class="map">
       <p class="title">{{ columnName }}</p>
       <p
         v-for="map in maps"
-        class="map"
+        class="column"
         :key="map.name"
         @click.middle="openMapInCurrentTab(map)"
         @click.left="openMapInOtherTab(map)"
       >
-        <label>
+        <label class="maplabel">
           <div class="tooltip">
             <img
               :src="'https://www.google.com/s2/favicons?domain=' + map.domain"
@@ -86,17 +86,17 @@ body {
   margin: 0;
 }
 
-p.map {
-  padding: 5px;
-  margin: 5px;
+p.column {
+  padding: 2px;
+  margin: 2px;
 }
 
-p.map img {
+p.column img {
   vertical-align: text-bottom;
   margin-right: 5px;
 }
 
-p.map:hover {
+p.column:hover {
   cursor: pointer;
   background-color: #eee;
 }
@@ -111,8 +111,8 @@ p.map:hover {
   margin: 0;
 }
 
-.column:last-child .title {
-  margin-right: 1ex;
+.map {
+  min-width: 820px;
 }
 
 .options-link {
@@ -120,14 +120,18 @@ p.map:hover {
   top: 0;
   right: 0;
   text-decoration: none;
+  font-size: x-large;
+  padding: 0px;
+  padding-right: 6px;
 }
 
 .options-link:hover {
   cursor: pointer;
 }
 
+
 .column {
-  display: inline-block;
+  display: inline-table;
   vertical-align: top;
   white-space: nowrap;
   width: 150px;
@@ -137,7 +141,7 @@ p.map:hover {
 }
 
 #mapmenu {
-  display: grid;
+  display: contents;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   //width: 450px;
   //column-count: 3;
@@ -150,6 +154,7 @@ p.map:hover {
 .tooltip {
   display: inherit;
 }
+
 
 .tooltip .tooltiptext {
   visibility: hidden;

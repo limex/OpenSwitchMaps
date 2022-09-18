@@ -1,15 +1,14 @@
 <template>
   <div>
-    <h2>Enabled maps</h2>
     <div
       v-for="(maps, columnName) in columns"
       :key="columnName"
-      class="column"
+      class="map"
     >
       <p class="title">{{ columnName }}</p>
       <p
         v-for="map in maps"
-        class="map"
+        class="column"
         :key="map.name"
       >
         <label>
@@ -54,6 +53,15 @@ module.exports = {
     font-size: 10pt;
   }
 
+ p.column {
+  padding: 2px;
+  margin: 2px;
+}
+
+.map {
+  min-width: 800px;
+}
+
   .maps {
     display: table;
   }
@@ -74,7 +82,7 @@ module.exports = {
   }
 
   .column {
-    display: table-cell;
+    display: inline-table;
     white-space: nowrap;
   }
 
