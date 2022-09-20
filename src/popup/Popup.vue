@@ -135,20 +135,20 @@ p.column:hover {
   vertical-align: top;
   white-space: nowrap;
   width: 150px;
-  //float:left;
-  //clear:both;
+  /* float:left; */
+  /* clear:both; */
   overflow: hidden;
 }
 
 #mapmenu {
   display: contents;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  //width: 450px;
-  //column-count: 3;
-  //display:flex;
-  //flex-direction: row;
-  //flex-wrap: wrap;
-  //flex-flow: 3 wrap;
+  /* width: 450px;
+  column-count: 3;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: 3 wrap; */
 }
 
 .tooltip {
