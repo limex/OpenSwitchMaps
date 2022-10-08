@@ -485,11 +485,11 @@ const maps_raw = [
   },
   {
     // https://www.komoot.com/plan/@47.9126603,16.4678192,10z
-    name: "Komoot",
+    name: "Komoot Plan",
     category: OUTDOOR_CATEGORY,
     default_check: true,
     domain: "komoot.com",
-    description: "Discover & Plan for multiple Sports",
+    description: "Plan for multiple Sports",
     getUrl(lat, lon, zoom) {
       zoom = Math.round(zoom);
       return (
@@ -502,6 +502,53 @@ const maps_raw = [
       );
       if (match) {
         const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    // https://www.komoot.com/discover/Location/@46.8331821%2C15.9810184/tours?sport=racebike&distance=30
+    name: "Komoot Discover",
+    category: OUTDOOR_CATEGORY,
+    default_check: true,
+    domain: "komoot.com",
+    description: "Discover for multiple Sports",
+    getUrl(lat, lon, zoom) {
+      zoom = Math.round(zoom);
+      return (
+        "https://www.komoot.com/discover/Location/@" + lat + "," + lon
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /komoot\.com\/discover\/Location\/@(-?\d[0-9.]*)%2C(-?\d[0-9.]*)/
+      );
+      if (match) {
+        const [, lat, lon] = match;
+        return [lat, lon, 12];
+      }
+    },
+  },
+  {
+    // http://www.refuges.info/nav#lat=47.08286082279579&lon=15.447260141372682&zoom=17 
+    name: "Refuges Info",
+    category: OUTDOOR_CATEGORY,
+    default_check: true,
+    domain: "refuges.info",
+    description: "Refuges, Parking, Busstation, Water",
+    getUrl(lat, lon, zoom) {
+      zoom = Math.round(zoom);
+      return (
+        "http://www.refuges.info/nav#lat=" + lat + "&" + lon + "&lon=" + lon + "&zoom=" + zoom 
+      );
+    },
+    // https://www.refuges.info/nav?map=16/15.9197/46.876
+    getLatLonZoom(url) {
+      const match = url.match(
+        /refuges\.info\/.*?map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        const [, zoom,lon,lat] = match;
         return [lat, lon, zoom];
       }
     },

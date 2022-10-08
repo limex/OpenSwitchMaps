@@ -32,3 +32,6 @@ $package.update | % { $package.version = $newManifestVersion }
 $package | ConvertTo-Json | Format-Json | set-content '.\package.json'
 # $packagelock.update | % { $packagelock.version = $newManifestVersion }
 # $packagelock | ConvertTo-Json | Format-Json | set-content '.\package-lock.json'
+
+#delete /dist to clean out obsolte files. Needed b/c new version file are added with new name.
+rm -r ./dist
