@@ -2335,6 +2335,27 @@ const maps_raw = [
 			}
 		},
 	},
+  {
+    name: "Waze Editor",
+    category: OSM_CATEGORY,
+    default_check: false,
+    domain: "waze.com",
+    description: "Maintain the waze maps",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.waze.com/editor?lon=" + lon + "&lat=" + lat + "&zoom=7"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /waze\.com\/.*?lon=(-?\d[0-9.]*)&lat=(-?\d[0-9.]*)&zoom=(\d{1,2})/
+      );
+      if (match) {
+        let [, lon, lat, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },  
 ];
 
 const maps = sortByKey(maps_raw, "name");
