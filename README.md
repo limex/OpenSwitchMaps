@@ -18,13 +18,15 @@ This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSw
 
 ## Install
 
-### from Browser plugin
+you have 3 options ...
 
-- (outdated, updating is a manual task I'm not interested in) [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmapslimex/koidglegkmmddlpoigdfmblkjnfhibeb)
+### a) from Browser plugin
+
+- (sorry this is outdated, because updating to Marketplace is an time expensive manual task I'm currently not willing to do) [Chrome webstore](https://chrome.google.com/webstore/detail/openswitchmapslimex/koidglegkmmddlpoigdfmblkjnfhibeb)
 - (also outdated) [Firefox addon center](https://addons.mozilla.org/firefox/addon/openswitchmaps_limex/)
-- Dialogs on _first_ click take some seconds to show up. Be patient. :)
+- Opening the Dialogs on _first_ click take some seconds to show up. Be patient. :)
 
-### from source code
+### b) from source code
 
 This extention uses Node.js
 
@@ -36,9 +38,15 @@ This extention uses Node.js
    - Chrome: chrome://extensions/ -> Load unpacked
 1. Optional:
 
-   Increase the build version in Powershell (if needed):
-   - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+   Increase the build version before 'Build the extension' in Powershell (if needed):
+   - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process    (optional in case of security warning)
    - .\inc_patch.ps1
+
+### c) Load unpacked dist directory from github
+
+1. Download the /dist Directory from github to a Directory of of your choice
+1. Add to your Chrome/Firefox
+   - Chrome: chrome://extensions/ -> Load unpacked
 
 ## How to use
 

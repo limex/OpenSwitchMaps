@@ -56,7 +56,7 @@ const POI_CATEGORY = "POI";
 const ROUTER_CATEGORY = "Router";
 const SATELLITE_CATEGORY = "Satellite";
 const TOOLS_CATEGORY = "Tools";
-const WEATHER_CATEGORY = "Weather";
+const WEATHER_CATEGORY = "Weather, Science";
 const WINTER_CATEGORY = "Winter";
 
 
@@ -177,6 +177,33 @@ const maps_raw = [
       );
       if (match) {
         const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "XC-Ski OA",
+    category: WINTER_CATEGORY,
+    default_check: true,
+    domain: "outdooractive.com",
+    description: "XC Routes",
+    // https://www.outdooractive.com/en/routes/#cat=Cross-Country%20Skiing&filter=r-fullyTranslatedLangus-,r-onlyOpened-,sb-sortedBy-0&fu=1&zc=12,12.36923,46.70884
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.outdooractive.com/en/routes/#cat=Cross-Country%20Skiing&filter=r-fullyTranslatedLangus-,r-onlyOpened-,sb-sortedBy-0&fu=1&zc=" +
+        zoom +
+        "," +
+        lon +
+        "," +
+        lat
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /outdooractive\.com\/.*?zc=(\d{1,2}),(-?\d[0-9.]*),(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lon, lat] = match;
         return [lat, lon, zoom];
       }
     },
@@ -444,7 +471,7 @@ const maps_raw = [
   },
   {
     // https://opencampingmap.org/#15/47.4777/15.7536/0/0
-    name: "OpenCampingMap",
+    name: "OpenCamping",
     category: CAMPER_CATEGORY,
     default_check: true,
     domain: "opencampingmap.org",
@@ -988,7 +1015,7 @@ const maps_raw = [
   {
     // https://www.meteoblue.com/en/weather/webmap/?mapcenter=-49.7529N-4.6143&zoom=4
     // https://www.meteoblue.com/en/weather/webmap/46.915N15.024E1464_Europe%2FVienna?variable=precipitation3h_cloudcover_pressure&level=surface&lines=none&mapcenter=43.6619N16.5502&zoom=10
-    name: "Meteoblue Map",
+    name: "Meteoblue",
     category: WEATHER_CATEGORY,
     description: "7d Forecast, Maps Wind, Snow, Waves, Rain, ...",
     default_check: true,
@@ -1359,8 +1386,8 @@ const maps_raw = [
     },
   },
   {
-    name: "Macrostrat (Geology)",
-    category: MISC_CATEGORY,
+    name: "Macrostrat",
+    category: WEATHER_CATEGORY,
     default_check: true,
     domain: "macrostrat.org",
     description: "Geological map",
@@ -1710,7 +1737,7 @@ const maps_raw = [
     },
   },
   {
-    name: "World Imagery Wayback",
+    name: "ArcGIS Wayback",
     category: SATELLITE_CATEGORY,
     default_check: true,
     domain: "arcgis.com",
