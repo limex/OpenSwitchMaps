@@ -2,9 +2,9 @@
 
 Map service switcher for Chrome/Firefox extension
 Greatly contributed by jazzzz.
-This is a clone from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!! Thanks! A very good foundation for my fork!
+This is a fork from ![tankaru/OpenSwitchMaps](https://github.com/tankaru/OpenSwitchMaps). Kudos for the great work!! Thanks! A very good foundation for my fork!
 
-## Motivation for clone (New Features & Fixes)
+## Motivation for fork (New Features & Fixes)
 
 - Some cleanup done. Added new maps
 - Most of the maps didn't calculate the lat/lon/zoom calculation that is needed to open a new map from.
