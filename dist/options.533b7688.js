@@ -30,4 +30,4 @@ var e=require("lodash"),a=require("./storage"),r=require("../maps"),s=r.getAllMa
 },{"lodash":"B1iE","./storage":"Neyh","../maps":"zB7T"}],"ONz4":[function(require,module,exports) {
 var e=require("vue").default,u=require("./Options.vue");new e(u).$mount("#options");
 },{"vue":"QPfz","./Options.vue":"EKOF"}]},{},["ONz4"], null)
-//# sourceMappingURL=/options.b0af3692.js.map
+//# sourceMappingURL=/options.533b7688.js.map

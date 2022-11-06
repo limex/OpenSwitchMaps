@@ -30,4 +30,4 @@ function n(n,e){return i(n)||o(n,e)||t(n,e)||r()}function r(){throw new TypeErro
 },{"lodash":"B1iE","webextension-polyfill":"wNgb","../maps":"zB7T","../options/storage":"Neyh"}],"prcc":[function(require,module,exports) {
 var e=require("vue").default,u=require("./Popup.vue");new e(u).$mount("#popup");
 },{"vue":"QPfz","./Popup.vue":"kIM2"}]},{},["prcc"], null)
-//# sourceMappingURL=/popup.50fe73a6.js.map
+//# sourceMappingURL=/popup.1028375d.js.map
