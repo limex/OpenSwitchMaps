@@ -414,7 +414,6 @@ const maps_raw = [
       }
     },
   },
-
   {
     name: "BRouter Web",
     category: CYCLING_CATEGORY,
@@ -435,6 +434,34 @@ const maps_raw = [
     getLatLonZoom(url) {
       const match = url.match(
         /brouter\.de\/.*#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "Bikerouter",
+    category: CYCLING_CATEGORY,
+    default_check: true,
+    domain: "bikerouter.de",
+    description: "Best bicycle routing on this planet",
+    // https://bikerouter.de/#map=14/47.0777/15.4904/bikerouter-outdoors,gravel-overlay&profile=m11n-gravel-pre
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://bikerouter.de/#map=" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon +
+        "/bikerouter-outdoors,gravel-overlay&profile=m11n-gravel-pre"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /bikerouter\.de\/.*#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
         const [, zoom, lat, lon] = match;
@@ -2359,6 +2386,24 @@ const maps_raw = [
 			if (match) {
 				const [, zoom, lat, lon] = match;
 				return [lat, normalizeLon(lon), Math.round(Number(zoom))];
+			}
+		},
+	},
+  {
+		// https://api.maptiler.com/maps/874645db-d9b7-4abe-be15-86beea6b922e/?key=dWJtt6xXsxoSfRCqIovk#14.7/47.04154/15.52717
+		name: "MTB-Gravel",
+		category: CYCLING_CATEGORY,
+		default_check: true,
+		domain: "osmand.net",
+		description: "marked: private, no bike access, trails",
+		getUrl(lat, lon, zoom) {
+			return `https://api.maptiler.com/maps/874645db-d9b7-4abe-be15-86beea6b922e/?key=dWJtt6xXsxoSfRCqIovk#${zoom}/${lat}/${lon}`;
+		},
+		getLatLonZoom(url) {
+			const match = url.match(/maptiler\.com\/maps\/.*#(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+			if (match) {
+				const [, zoom, lat, lon] = match;
+				return [lat, lon, Math.round(Number(zoom))];
 			}
 		},
 	},
