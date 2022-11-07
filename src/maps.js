@@ -616,7 +616,7 @@ const maps_raw = [
     getUrl(lat, lon, zoom) {
       zoom = Math.round(zoom);
       return (
-        "https://www.park4night.com/carte_lieux?lat=" +
+        "https://www.park4night.com/de/carte_lieux?lat=" +
         lat +
         "&lng=" +
         lon +
