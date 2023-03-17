@@ -2427,7 +2427,28 @@ const maps_raw = [
         return [lat, lon, zoom];
       }
     },
-  },  
+  },
+  {
+    name: "Peakvisor",
+    category: OUTDOOR_CATEGORY,
+    default_check: true,
+    domain: "peakvisor.com",
+    description: "3D View Panorama",
+    getUrl(lat, lon, zoom) {
+      return (
+        "http://peakvisor.com/panorama.html?lat=" + lat + "&lng=" + lon + "&alt=4598&yaw=-4.94&pitch=-7.67&hfov=60.00"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /peakvisor\.com\/.*?lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, lat, lng] = match;
+        return [lat, lon, 16];
+      }
+    },
+  }  
 ];
 
 const maps = sortByKey(maps_raw, "name");
