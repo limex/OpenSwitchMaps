@@ -616,11 +616,12 @@ const maps_raw = [
     getUrl(lat, lon, zoom) {
       zoom = Math.round(zoom);
       return (
-        "https://www.park4night.com/de/carte_lieux?lat=" +
+        // https://www.park4night.com/de/search?lat=47.17869145112757&lng=16.3727258831492&z=11
+        "https://www.park4night.com/de/search?lat=" +
         lat +
         "&lng=" +
         lon +
-        "&zoom=" +
+        "&z=" +
         zoom
       );
     },
