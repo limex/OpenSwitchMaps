@@ -1136,7 +1136,7 @@ const maps_raw = [
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /bergfex\.at\/\?mapstate=?(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2}),/
+        /bergfex\.at\/.*\?mapstate=?(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2}),/
       );
       if (match) {
         let [, lat, lon, zoom] = match;
