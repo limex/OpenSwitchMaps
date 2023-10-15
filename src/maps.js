@@ -2078,7 +2078,7 @@ const maps_raw = [
     // https://www.opensnowmap.org/?zoom=15&lat=47.03757&lon=15.4687334#map=15/15.353/47.055&b=snowmap&m=false&h=false
     name: "OpenSnowMap",
     category: WINTER_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "opensnowmap.org",
     description: "Winter sports map",
     getUrl(lat, lon, zoom) {
@@ -2104,6 +2104,7 @@ const maps_raw = [
       );
       if (match) {
         let [, zoom, lon, lat] = match;
+        return [lat, lon, zoom];
       }
     },
   },
