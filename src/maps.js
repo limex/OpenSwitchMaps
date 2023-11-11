@@ -113,6 +113,27 @@ const maps_raw = [
     },
   },
   {
+		name: "Bing",
+		category: MISC_CATEGORY,
+		default_check: true,
+		domain: "www.bing.com",
+		getUrl(lat, lon, zoom) {
+			// https://learn.microsoft.com/en-us/bingmaps/articles/create-a-custom-map-url#collections-categories 
+			return "https://www.bing.com/maps?cp=" + lat + "~" + lon + "&lvl=" + zoom;
+		},
+    getLatLonZoom(url) {
+      // https://www.bing.com/maps?q=Grindav%C3%ADk&FORM=HDRSC6&cp=63.825761%7E-22.17778&lvl=10.7
+      const match = url.match(
+        /www\.bing\.com\/maps.*cp=(-?\d[0-9.]*)%7E(-?\d[0-9.]*)&lvl=(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, lat, lon, zoom] = match;
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+	},
+  {
     name: "OpenStreetMap",
     category: OSM_CATEGORY,
     default_check: true,
