@@ -58,6 +58,7 @@ const SATELLITE_CATEGORY = "Satellite";
 const TOOLS_CATEGORY = "Tools";
 const WEATHER_CATEGORY = "Weather, Science";
 const WINTER_CATEGORY = "Winter";
+const WATER_CATEGORY = "Water";
 
 function sortByKey(array, key) {
   return array.sort(function (a, b) {
@@ -113,14 +114,14 @@ const maps_raw = [
     },
   },
   {
-		name: "Bing",
-		category: MISC_CATEGORY,
-		default_check: true,
-		domain: "www.bing.com",
-		getUrl(lat, lon, zoom) {
-			// https://learn.microsoft.com/en-us/bingmaps/articles/create-a-custom-map-url#collections-categories 
-			return "https://www.bing.com/maps?cp=" + lat + "~" + lon + "&lvl=" + zoom;
-		},
+    name: "Bing",
+    category: MISC_CATEGORY,
+    default_check: true,
+    domain: "www.bing.com",
+    getUrl(lat, lon, zoom) {
+      // https://learn.microsoft.com/en-us/bingmaps/articles/create-a-custom-map-url#collections-categories
+      return "https://www.bing.com/maps?cp=" + lat + "~" + lon + "&lvl=" + zoom;
+    },
     getLatLonZoom(url) {
       // https://www.bing.com/maps?q=Grindav%C3%ADk&FORM=HDRSC6&cp=63.825761%7E-22.17778&lvl=10.7
       const match = url.match(
@@ -132,7 +133,7 @@ const maps_raw = [
         return [lat, lon, zoom];
       }
     },
-	},
+  },
   {
     name: "OpenStreetMap",
     category: OSM_CATEGORY,
@@ -166,15 +167,44 @@ const maps_raw = [
         "&lng=" +
         lon +
         "&z=" +
-                zoom
+        zoom
       );
     },
-getLatLonZoom(url) {
+    getLatLonZoom(url) {
       const match = url.match(
         /www\.mapillary\.com.*lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&z=(\d{1,2})/
       );
       if (match) {
         const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    // https://waterwaymap.org/#map=9.04/46.7192/17.3936&tiles=planet-waterway-name-group-name&len=5..inf
+    name: "WaterWayMap",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "waterwaymap.org",
+    description: "by lenght, navigatable",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://waterwaymap.org/#map=" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon +
+        "&tiles=planet-waterway-name-group-name&len=5..inf"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /waterwaymap\.org\/#map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        zoom = Math.round(zoom);
         return [lat, lon, zoom];
       }
     },
@@ -419,9 +449,9 @@ getLatLonZoom(url) {
     },
     getLatLonZoom(url) {
       const match = url.match(
-/camping\.info\/.*?area=(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)&zl=(\d{1,2})/
-        );
-              if (match) {
+        /camping\.info\/.*?area=(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)&zl=(\d{1,2})/
+      );
+      if (match) {
         let [, minlon, minlat, maxlon, maxlat, zoom] = match;
         let [lat, lon, dummy] = bboxToLatLonZoom(
           minlon,
@@ -650,7 +680,9 @@ getLatLonZoom(url) {
       );
     },
     getLatLonZoom(url) {
-      const match = url.match(/park4night\.com\/.*?lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&z=(\d{1,2})/);
+      const match = url.match(
+        /park4night\.com\/.*?lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&z=(\d{1,2})/
+      );
       if (match) {
         const [, lat, lon, zoom] = match;
         return [lat, lon, zoom];
