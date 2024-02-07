@@ -166,10 +166,10 @@ const maps_raw = [
         "&lng=" +
         lon +
         "&z=" +
-        zoom
+                zoom
       );
     },
-    getLatLonZoom(url) {
+getLatLonZoom(url) {
       const match = url.match(
         /www\.mapillary\.com.*lat=(-?\d[0-9.]*)&lng=(-?\d[0-9.]*)&z=(\d{1,2})/
       );
@@ -419,9 +419,9 @@ const maps_raw = [
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /camping\.info\/.*?area=(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)&zl=(\d{1,2})/
-      );
-      if (match) {
+/camping\.info\/.*?area=(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*),(-?\d[0-9.]*)&zl=(\d{1,2})/
+        );
+              if (match) {
         let [, minlon, minlat, maxlon, maxlat, zoom] = match;
         let [lat, lon, dummy] = bboxToLatLonZoom(
           minlon,
@@ -1160,23 +1160,25 @@ const maps_raw = [
     },
   },
   {
+    // https://www.bergfex.at/?mapstate=47.091212,15.260954,11,o,430,47.420654,13.1286
     name: "Bergfex",
     category: OUTDOOR_CATEGORY,
     description: "Topo, Tracks, Tourism",
     default_check: true,
     domain: "bergfex.at",
     getUrl(lat, lon, zoom) {
+      const [minlon, minlat, maxlon, maxlat] = latLonZoomToBbox(lat, lon, zoom);
       return (
-        "https://www.bergfex.at/oesterreich/?mapstate=" +
-        lat +
+        "https://www.bergfex.at?mapstate=" +
+        minlat +
         "," +
-        lon +
+        minlon +
         "," +
         zoom +
-        ",o,0," +
-        lat +
+        ",o,430," +
+        maxlat +
         "," +
-        lon
+        maxlon
       );
     },
     getLatLonZoom(url) {
