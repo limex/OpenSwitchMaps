@@ -2241,8 +2241,8 @@ const maps_raw = [
   {
     //http://map.openseamap.org/?zoom=6&lat=53.32140&lon=2.86829
     name: "OpenSeaMap",
-    category: MISC_CATEGORY,
-    default_check: false,
+    category: WATER_CATEGORY,
+    default_check: true,
     domain: "openseamap.org",
     description: "focus on nautical info",
     getUrl(lat, lon, zoom) {
@@ -2414,8 +2414,8 @@ const maps_raw = [
   {
     //http://beacons.schmirler.de/en/world.html#map=11/35.315176983316775/139.7419591178308&layers=OS5&details=18
     name: "Sea Beacons",
-    category: MISC_CATEGORY,
-    default_check: false,
+    category: WATER_CATEGORY,
+    default_check: true,
     domain: "schmirler.de",
     description: "Lighthouse map",
     getUrl(lat, lon, zoom) {
