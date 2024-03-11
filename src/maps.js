@@ -181,6 +181,35 @@ const maps_raw = [
     },
   },
   {
+    // https://map.osm.wikidata.link/map/16/48.2343/16.293?radius=5
+    name: "OWL Map",
+    category: OSM_CATEGORY,
+    default_check: true,
+    domain: "map.osm.wikidata.link",
+    description: "Wikidata items",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://map.osm.wikidata.link/map/" + 
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon +
+        "?radius=5"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /map\.osm\.wikidata\.link\/map\/(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     // https://waterwaymap.org/#map=9.04/46.7192/17.3936&tiles=planet-waterway-name-group-name&len=5..inf
     name: "WaterWayMap",
     category: WATER_CATEGORY,
@@ -203,7 +232,7 @@ const maps_raw = [
         /waterwaymap\.org\/#map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
-        const [, zoom, lat, lon] = match;
+        let [, zoom, lat, lon] = match;
         zoom = Math.round(zoom);
         return [lat, lon, zoom];
       }
