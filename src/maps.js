@@ -303,7 +303,7 @@ const maps_raw = [
       );
       if (match) {
         let [, zoom, lat, lon] = match;
-        zoom = Math.round(zoom);
+        // zoom = Math.round(zoom);
         return [lat, lon, zoom];
       }
     },
@@ -616,6 +616,25 @@ const maps_raw = [
       }
     },
   },
+  {
+		// https://www.norgeskart.no/#!?project=norgeskart&layers=1002&zoom=13&lat=6649044.14&lon=262775.36
+		name: "Norgeskart",
+		category: OUTDOOR_CATEGORY,
+		default_check: true,
+		domain: "www.norgeskart.no",
+		description: "Outdoor, POI",
+		getUrl(lat, lon, zoom) {
+			return "https://www.norgeskart.no/#!?project=norgeskart&layers=1002,1013,1014,1015,1016,1017,1018,1019,1020,1021,1022,1023&zoom=" + zoom + "&lat=" + lat + "&lon=" + lon;
+		},
+		getLatLonZoom(url) {
+			const match = url.match(/www\.norgeskart\.no.*#.*layers=1002.*([0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+
+			if (match) {
+				const [, zoom, lat, lon] = match;
+				return [lat, normalizeLon(lon), Math.round(Number(zoom))];
+			}
+		},
+	},
   {
     name: "Flussinfo",
     category: WATER_CATEGORY,
