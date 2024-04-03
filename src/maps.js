@@ -21,6 +21,24 @@ function getLatLonZoom(url) {
   }
 }
 
+function getZoomLevel(radius) {
+  let zoomLevel;
+  if (radius > 0) {
+    let radiusElevated = radius + radius / 2;
+    let scale = radiusElevated / 500;
+    zoomLevel = 18 - Math.log(scale) / Math.log(2);
+  }
+  zoomLevel = parseFloat(zoomLevel.toFixed(2));
+  return zoomLevel;
+}
+
+function getRadiusForZoomLevel(zoomLevel) {
+  let scale = Math.pow(2, 18 - zoomLevel);
+  let radiusElevated = scale * 500;
+  let radius = radiusElevated - radiusElevated / 2;
+  return radius;
+}
+
 //------------ replace below here -------------
 
 function bboxToLatLonZoom(minlon, minlat, maxlon, maxlat) {
@@ -189,7 +207,7 @@ const maps_raw = [
     description: "Wikidata items",
     getUrl(lat, lon, zoom) {
       return (
-        "https://map.osm.wikidata.link/map/" + 
+        "https://map.osm.wikidata.link/map/" +
         zoom +
         "/" +
         lat +
@@ -230,6 +248,58 @@ const maps_raw = [
     getLatLonZoom(url) {
       const match = url.match(
         /waterwaymap\.org\/#map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    // https://www.flosm.org/de/Wassersport.html?lat=4.88779867&lon=7.08481579&r=238418.58&st=0&sw=anchorage,beacon,boathoist,boatyard,canoe,canoeing,crane,dock,ferryroute,ferrystop,ferryterminal,harbour,harbourmaster,marina,marinaberth,mooring,mooringbuoy,mooringitem,mooringprivate,pier,portfacilityberth,portfacilityoffice,rowing,seamarkbeacon,seamarkbuoy,seamarknotice,separationzone,shipwreck,slipway,watermotorboat,waternoboat,waterpoint,waterrowboat,watership,waterwayfuel,waterwayguide,waterwaylockgate,waterwayweir
+
+    name: "flosm",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "flosm.org",
+    description: "Watersport",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.flosm.org/de/Wassersport.html?lat=" +
+        lat +
+        "&lon=" +
+        lon +
+        "&r=" +
+        getRadiusForZoomLevel(zoom) +
+        "&st=0&sw=anchorage,beacon,boathoist,boatyard,canoe,canoeing,crane,dock,ferryroute,ferrystop,ferryterminal,harbour,harbourmaster,marina,marinaberth,mooring,mooringbuoy,mooringitem,mooringprivate,pier,portfacilityberth,portfacilityoffice,rowing,seamarkbeacon,seamarkbuoy,seamarknotice,separationzone,shipwreck,slipway,watermotorboat,waternoboat,waterpoint,waterrowboat,watership,waterwayfuel,waterwayguide,waterwaylockgate,waterwayweir"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /flosm\.org\/de\/Wassersport\.html\?lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*)&r=(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, lat, lon, radius] = match;
+        zoom = getZoomLevel(radius);
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    // https://maps.grade.de/cemt.html#10/47.487550/16.964598
+    name: "Grade.de",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "grade.de",
+    description: "by lenght, navigatable",
+    getUrl(lat, lon, zoom) {
+      return "https://maps.grade.de/cemt.html#" + zoom + "/" + lat + "/" + lon;
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /maps\.grade\.de\/cemt\.html#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
         let [, zoom, lat, lon] = match;
@@ -512,6 +582,54 @@ const maps_raw = [
     getLatLonZoom(url) {
       const match = url.match(
         /brouter\.de\/.*#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "BRouter Grade.de",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "grade.de",
+    description: "Waterway Routing",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://brouter.grade.de/#map=" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon +
+        "/CARTO,Seamarks,Wasserstrassenklassen,Bevaarbaarheid,Vaarweginformatie,route-quality&profile=river_canoe"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /brouter\.grade\.de\/.*#map=(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        const [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "Flussinfo",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "flussinfo.net",
+    description: "North Germany only",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.flussinfo.net/map/#" + zoom + "/" + lat + "/" + lon + ""
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /flussinfo\.net\/map\/#(\d{1,2})\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
         const [, zoom, lat, lon] = match;

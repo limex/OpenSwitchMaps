@@ -1,6 +1,6 @@
 {
   "name": "openswitchmapslimex",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Switch map services and Tools for OpenStreetMap contributors",
   "scripts": {
     "dev": "parcel watch src/manifest.json",
