@@ -1,1 +1,0 @@
-rm -r dist && sh inc_patch.sh &&  npm run build

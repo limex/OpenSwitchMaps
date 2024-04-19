@@ -228,6 +228,34 @@ const maps_raw = [
     },
   },
   {
+    // https://opentripmap.com/en/#14.25/53.2868/12.9567
+    name: "Open Trip",
+    category: POI_CATEGORY,
+    default_check: true,
+    domain: "opentripmap.com",
+    description: "Sightseeing, POI",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://opentripmap.com/en/#" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /opentripmap\.com\/en\/#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     // https://waterwaymap.org/#map=9.04/46.7192/17.3936&tiles=planet-waterway-name-group-name&len=5..inf
     name: "WaterWayMap",
     category: WATER_CATEGORY,
@@ -857,7 +885,7 @@ const maps_raw = [
   },
 
   {
-    // https://en.mapy.cz/fotografie?x=15.7503858&y=47.4797360&z=15&l=0
+    // https://en.mapy.cz/turisticka?l=0&x=12.9337801&y=53.1855514&z=14&ovl=2%2C4
     name: "Mapy.cz",
     category: OUTDOOR_CATEGORY,
     default_check: true,
@@ -865,18 +893,18 @@ const maps_raw = [
     description: "Outdoor with geotagged Pics",
     getUrl(lat, lon, zoom) {
       return (
-        "https://en.mapy.cz/fotografie?x=" +
+        "https://en.mapy.cz/turisticka?l=0&x=" +
         lon +
         "&y=" +
         lat +
         "&z=" +
         zoom +
-        "&l=0"
+        "&ovl=2%2C4"
       );
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /en\.mapy\.cz\/fotografie\?x=(-?\d[0-9.]*)&y=(-?\d[0-9.]*)&z=(\d{1,2})/
+        /en\.mapy\.cz\/.*x=(-?\d[0-9.]*)&y=(-?\d[0-9.]*)&z=(\d{1,2})/
       );
       if (match) {
         const [, lon, lat, zoom] = match;
