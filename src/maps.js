@@ -1687,6 +1687,7 @@ const maps_raw = [
     },
   },
   {
+    // https://macrostrat.org/map/layers#x=13.5264&y=46.9266&z=7.9&show=fossils,geology
     name: "Macrostrat",
     category: WEATHER_CATEGORY,
     default_check: true,
@@ -1694,22 +1695,22 @@ const maps_raw = [
     description: "Geological map",
     getUrl(lat, lon, zoom) {
       return (
-        "https://macrostrat.org/map/#/z=" +
-        zoom +
-        "/x=" +
+        "https://macrostrat.org/map/#x=" +
         lon +
-        "/y=" +
+        "&y=" +
         lat +
-        "/bedrock/lines/"
+        "&z=" +
+        zoom +
+        "&show=fossils,geology"
       );
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /macrostrat\.org\/map\/#\/z=([0-9.]+)\/x=(-?\d[0-9.]+)\/y=(-?\d[0-9.]+)/
+        /macrostrat\.org\/map\/.*#x=([0-9.]+)&y=(-?\d[0-9.]+)&z=(-?\d[0-9.]+)/
       );
       if (match) {
-        let [, zoom, lon, lat] = match;
-        return [lat, lon, zoom];
+        let [, lon, lat, zoom] = match;
+        return [lat, lon, Math.round(zoom)];
       }
     },
   },
