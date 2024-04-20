@@ -21,6 +21,21 @@ function getLatLonZoom(url) {
   }
 }
 
+
+function webMercatorToWGS84(x, y) {
+  const lon = (x / 20037508.34) * 180;
+  const lat = (y / 20037508.34) * 180;
+  lat = (180 / Math.PI) * (2 * Math.atan(Math.exp((lat * Math.PI) / 180)) - Math.PI / 2);
+  return [lon, lat];
+}
+
+function wgs84ToWebMercator(lon, lat) {
+  const x = (lon / 180) * 20037508.34;
+  let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
+  y = (y / 180) * 20037508.34;
+  return [x, y];
+}
+
 function getZoomLevel(radius) {
   let zoomLevel;
   if (radius > 0) {
@@ -310,6 +325,35 @@ const maps_raw = [
       if (match) {
         let [, lat, lon, radius] = match;
         zoom = getZoomLevel(radius);
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    // https://www.elwis.de/DE/Karte/?zoom=8&center=10.630644%2C52.41405&vl=route%2Csluice%2Cftm_group%2Cftm_nolimit%2Cftm_limit%2Cftm_obstru%2Cftm_warning%2Ckarte_farbig&date_start=2024-04-19&date_end=2024-05-19&route_option=bsf
+    name: "ELWIS",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "elwis.de",
+    description: "Wasserstraßen DE",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.elwis.de/DE/Karte/?zoom=" +
+        zoom +
+        "&center=" +
+        lon +
+        "%2C" +
+        lat +
+        "&vl=route%2Csluice%2Cftm_group%2Cftm_nolimit%2Cftm_limit%2Cftm_obstru%2Cftm_warning%2Ckarte_farbig&route_option=bsf"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /elwis\.de\/.*\/\?zoom=(-?\d[0-9.]*)&center=(-?\d[0-9.]*)%2C(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lon, lat] = match;
         zoom = Math.round(zoom);
         return [lat, lon, zoom];
       }
@@ -1940,6 +1984,29 @@ const maps_raw = [
       );
       if (match) {
         const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    // Todo: fix conversion to/from sperical mercator
+    // https://wikimap.wiki/?base=map&lat=1427437.5129&lon=7044822.2419&showAll=true&wiki=dewiki&zoom=11
+    name: "wikimap",
+    category: POI_CATEGORY,
+    default_check: true,
+    domain: "wikimap.wiki",
+    description: "Wikipedia POI",
+    getUrl(lat, lon, zoom) {
+      const [x, y, z] = latLonZoomToSphericalMercator(lat, lon, zoom);
+      return "https://wikimap.wiki/?base=map&lat=" + x + "&lon=" + y + "&zoom=" + z + "&showAll=true&wiki=dewiki";
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /wikimap\.wiki\/.*&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*).*&zoom=(\d{1,2})/
+      );
+      if (match) {
+        const [, y, x, z] = match;
+        const [lat, lon, zoom] = sphericalMercatorToLatLonZoom(x, y, z);
         return [lat, lon, zoom];
       }
     },
