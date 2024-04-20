@@ -21,20 +21,42 @@ function getLatLonZoom(url) {
   }
 }
 
+// EPSG 3857 (Web Mercator) to EPSG 4326 (WGS 84)
+function webMercatorToWGS84(lat, lon) {
+    
+  const e_value = 2.7182818284;
+  const X = 20037508.34;
+  const lat3857 = lat
+  const long3857 = lon;
+  
+  //converting the longitute from epsg 3857 to 4326
+  const long4326 = (long3857*180)/X;
+  
+  //converting the latitude from epsg 3857 to 4326 split in multiple lines for readability        
+  let lat4326 = lat3857/(X / 180);
+  const exponent = (Math.PI / 180) * lat4326;
+  
+  lat4326 = Math.atan(Math.pow(e_value, exponent));
+  lat4326 = lat4326 / (Math.PI / 360); // Here is the fixed line
+  lat4326 = lat4326 - 90;
 
-function webMercatorToWGS84(x, y) {
-  const lon = (x / 20037508.34) * 180;
-  const lat = (y / 20037508.34) * 180;
-  lat = (180 / Math.PI) * (2 * Math.atan(Math.exp((lat * Math.PI) / 180)) - Math.PI / 2);
-  return [lon, lat];
+  return [lat4326, long4326];
+  
 }
 
-function wgs84ToWebMercator(lon, lat) {
-  const x = (lon / 180) * 20037508.34;
-  let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
-  y = (y / 180) * 20037508.34;
-  return [x, y];
+// EPSG 4326 (WGS 84) to EPSG 3857 (Web Mercator)
+function wgs84ToWebMercator(lat, lon) {
+  const X = 20037508.34;
+  let long3857 = (lon * X) / 180;
+  let lat3857 = parseFloat(lat) + 90;
+  lat3857 = lat3857 * (Math.PI/360);
+  lat3857 = Math.tan(lat3857);
+  lat3857 = Math.log(lat3857);
+  lat3857 = lat3857 / (Math.PI / 180);
+  lat3857 = (lat3857 * X) / 180;
+  return [lat3857, long3857];
 }
+
 
 function getZoomLevel(radius) {
   let zoomLevel;
@@ -1989,7 +2011,6 @@ const maps_raw = [
     },
   },
   {
-    // Todo: fix conversion to/from sperical mercator
     // https://wikimap.wiki/?base=map&lat=1427437.5129&lon=7044822.2419&showAll=true&wiki=dewiki&zoom=11
     name: "wikimap",
     category: POI_CATEGORY,
@@ -1997,16 +2018,16 @@ const maps_raw = [
     domain: "wikimap.wiki",
     description: "Wikipedia POI",
     getUrl(lat, lon, zoom) {
-      const [x, y, z] = latLonZoomToSphericalMercator(lat, lon, zoom);
-      return "https://wikimap.wiki/?base=map&lat=" + x + "&lon=" + y + "&zoom=" + z + "&showAll=true&wiki=dewiki";
+      const [mlon, mlat] = wgs84ToWebMercator(lat,lon);
+      return "https://wikimap.wiki/?base=map&lat=" + mlat + "&lon=" + mlon + "&zoom=" + zoom + "&showAll=true&wiki=dewiki";
     },
     getLatLonZoom(url) {
       const match = url.match(
         /wikimap\.wiki\/.*&lat=(-?\d[0-9.]*)&lon=(-?\d[0-9.]*).*&zoom=(\d{1,2})/
       );
       if (match) {
-        const [, y, x, z] = match;
-        const [lat, lon, zoom] = sphericalMercatorToLatLonZoom(x, y, z);
+        const [, mlat, mlon, zoom] = match;
+        const [lat, lon] = webMercatorToWGS84(mlon, mlat);
         return [lat, lon, zoom];
       }
     },
@@ -2060,7 +2081,7 @@ const maps_raw = [
   {
     name: "GeoHack",
     category: POI_CATEGORY,
-    default_check: false,
+    default_check: true,
     domain: "wmflabs.org",
     description: "Map links for Wikipedia articles",
     getUrl(lat, lon, zoom) {
