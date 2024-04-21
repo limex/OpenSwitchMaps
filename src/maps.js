@@ -169,6 +169,24 @@ const maps_raw = [
     },
   },
   {
+		// https://www.strava.com/maps/global-heatmap?style=light&terrain=false&sport=StandUpPaddling&gColor=hot&gOpacity=100&labels=true&poi=true#11.05/46.9717/15.0214
+		name: "STRAVA Heatmap SUP",
+		category: WATER_CATEGORY,
+		default_check: true,
+		domain: "strava.com",
+		description: "Heatmap of all athletes",
+		getUrl(lat, lon, zoom) {
+			return "https://www.strava.com/maps/global-heatmap?style=light&terrain=false&sport=StandUpPaddling&gColor=hot&gOpacity=100&labels=true&poi=true#" + zoom + "/" + lat + "/" + lon ;
+		},
+		getLatLonZoom(url) {
+			const match = url.match(/www\.strava\.com\/maps\/global-heatmap\?.*#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/);
+			if (match) {
+				const [, zoom, lat, lon] = match;
+				return [lat, lon, Math.round(Number(zoom))];
+			}
+		},
+	},
+  {
     name: "Bing",
     category: MISC_CATEGORY,
     default_check: true,
@@ -323,7 +341,6 @@ const maps_raw = [
   },
   {
     // https://www.flosm.org/de/Wassersport.html?lat=4.88779867&lon=7.08481579&r=238418.58&st=0&sw=anchorage,beacon,boathoist,boatyard,canoe,canoeing,crane,dock,ferryroute,ferrystop,ferryterminal,harbour,harbourmaster,marina,marinaberth,mooring,mooringbuoy,mooringitem,mooringprivate,pier,portfacilityberth,portfacilityoffice,rowing,seamarkbeacon,seamarkbuoy,seamarknotice,separationzone,shipwreck,slipway,watermotorboat,waternoboat,waterpoint,waterrowboat,watership,waterwayfuel,waterwayguide,waterwaylockgate,waterwayweir
-
     name: "flosm",
     category: WATER_CATEGORY,
     default_check: true,
