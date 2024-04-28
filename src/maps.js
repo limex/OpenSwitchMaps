@@ -254,6 +254,34 @@ const maps_raw = [
     },
   },
   {
+    // https://wandrer.earth/dashboard/map#11.01/45.6868/8.1221
+    name: "Wandrer",
+    category: CYCLING_CATEGORY,
+    default_check: true,
+    domain: "wandrer.earth/",
+    description: "Hike & Ride done",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://wandrer.earth/dashboard/map#" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /wandrer\.earth\/dashboard\/map#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        zoom = Math.round(zoom);
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     // https://map.osm.wikidata.link/map/16/48.2343/16.293?radius=5
     name: "OWL Map",
     category: OSM_CATEGORY,
