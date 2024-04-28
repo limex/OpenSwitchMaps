@@ -61,8 +61,8 @@ function wgs84ToWebMercator(lat, lon) {
 function getZoomLevel(radius) {
   let zoomLevel;
   if (radius > 0) {
-    let radiusElevated = radius + radius / 2;
-    let scale = radiusElevated / 500;
+    let radiusElevated = radius;
+    let scale = radiusElevated / 500.0;
     zoomLevel = 18 - Math.log(scale) / Math.log(2);
   }
   zoomLevel = parseFloat(zoomLevel.toFixed(2));
@@ -436,6 +436,33 @@ const maps_raw = [
       );
       if (match) {
         const [, lat, lon, zoom] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
+    name: "AlpenvereinActiv",
+    category: OUTDOOR_CATEGORY,
+    default_check: true,
+    domain: "alpenvereinaktiv.com",
+    description: "more than OA",
+    // https://www.alpenvereinaktiv.com/de/touren/#caml=668,2lh8fe,7ld5ae,0,0&cat=*&filter=b-onlyTopTours-1,r-fullyTranslatedLangus-,r-openState-,sb-sortedBy-0&fu=1&ov=alerts,images,webcams&zc=9,14.75052,46.08657
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.alpenvereinaktiv.com/de/touren/#caml=668,2lh8fe,7ld5ae,0,0&cat=*&filter=b-onlyTopTours-1,r-fullyTranslatedLangus-,r-openState-,sb-sortedBy-0&fu=1&ov=alerts,images,webcams&zc=" +
+        zoom +
+        "," +
+        lon +
+        "," +
+        lat
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /alpenvereinaktiv\.com\/.*?zc=(\d{1,2}),(-?\d[0-9.]*),(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lon, lat] = match;
         return [lat, lon, zoom];
       }
     },
