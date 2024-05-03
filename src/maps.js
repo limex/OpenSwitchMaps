@@ -1501,29 +1501,6 @@ const maps_raw = [
     },
   },
   {
-    // https://wandrer.earth/dashboard/map#10.59/47.0028/15.5178
-    name: "Wandrer",
-    category: OUTDOOR_CATEGORY,
-    description: "Mark Strava Rides & Walks on Map",
-    default_check: true,
-    domain: "wandrer.earth",
-    getUrl(lat, lon, zoom) {
-      return (
-        "https://wandrer.earth/dashboard/map#" + zoom + "/" + lat + "/" + lon
-      );
-    },
-    getLatLonZoom(url) {
-      const match = url.match(
-        /wandrer\.earth\/.*map#(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
-      );
-      if (match) {
-        let [, zoom, lat, lon] = match;
-        zoom = Math.round(zoom);
-        return [lat, lon, zoom];
-      }
-    },
-  },
-  {
     // https://www.bergfex.at/?mapstate=47.091212,15.260954,11,o,430,47.420654,13.1286
     name: "Bergfex",
     category: OUTDOOR_CATEGORY,
@@ -2199,6 +2176,7 @@ const maps_raw = [
     },
   },
   {
+    // https://livingatlas.arcgis.com/wayback/?ext=15.486630684967041,47.04261534248352,15.54460931503296,47.07160465751648#active=7110&mapCenter=15.54999%2C47.08256%2C12
     name: "ArcGIS Wayback",
     category: SATELLITE_CATEGORY,
     default_check: true,
