@@ -358,7 +358,7 @@ const maps_raw = [
     },
     getLatLonZoom(url) {
       const match = url.match(
-        /waterwaymap\.org\/#map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+        /waterwaymap\.org\/.*map=(-?\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
       );
       if (match) {
         let [, zoom, lat, lon] = match;
