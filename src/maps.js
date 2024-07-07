@@ -419,6 +419,34 @@ const maps_raw = [
     },
   },
   {
+    // https://www.windfinder.com/?utm_source=windfinder.com&utm_medium=web&utm_campaign=redirect#8/47.8427/18.7894/sfc/spot
+    name: "Windfinder",
+    category: WATER_CATEGORY,
+    default_check: true,
+    domain: "windfinder.com",
+    description: "Wind Prediction",
+    getUrl(lat, lon, zoom) {
+      return (
+        "https://www.windfinder.com/?utm_source=windfinder.com&utm_medium=web&utm_campaign=redirect#" +
+        zoom +
+        "/" +
+        lat +
+        "/" +
+        lon +
+        "/sfc/spot"
+      );
+    },
+    getLatLonZoom(url) {
+      const match = url.match(
+        /windfinder\.com\/.*#(\d[0-9.]*)\/(-?\d[0-9.]*)\/(-?\d[0-9.]*)/
+      );
+      if (match) {
+        let [, zoom, lat, lon] = match;
+        return [lat, lon, zoom];
+      }
+    },
+  },
+  {
     // https://www.flosm.org/de/Wassersport.html?lat=4.88779867&lon=7.08481579&r=238418.58&st=0&sw=anchorage,beacon,boathoist,boatyard,canoe,canoeing,crane,dock,ferryroute,ferrystop,ferryterminal,harbour,harbourmaster,marina,marinaberth,mooring,mooringbuoy,mooringitem,mooringprivate,pier,portfacilityberth,portfacilityoffice,rowing,seamarkbeacon,seamarkbuoy,seamarknotice,separationzone,shipwreck,slipway,watermotorboat,waternoboat,waterpoint,waterrowboat,watership,waterwayfuel,waterwayguide,waterwaylockgate,waterwayweir
     name: "flosm",
     category: WATER_CATEGORY,
