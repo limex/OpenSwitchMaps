@@ -1,3 +1,6 @@
+> **Note:** This project is NOT maintained any more.   
+> New features are being added to this repo: https://github.com/limex/OpenSwitchMaps-v3
+
 # OpenSwitchMaps
 
 Map service switcher for Chrome/Firefox extension
